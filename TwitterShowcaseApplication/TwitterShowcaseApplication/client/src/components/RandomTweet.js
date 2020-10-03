@@ -2,7 +2,7 @@ import React from 'react';
 
 function RandomTweet() {
     return (
-        <div></div>
+        <div>Random Tweet</div>
     )
 }
 

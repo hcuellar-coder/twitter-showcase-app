@@ -2,18 +2,18 @@ import React from 'react';
 import Home from './components/Home';
 import UserSearch from './components/UserSearch';
 import RandomTweet from './components/RandomTweet';
-import Layout from './components/Layout';
+import NavBar from './components/NavBar';
 import { Route } from 'react-router';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import Layout from './components/Layout';
 
 function App() {
   return (
     <div className="App">
       <Layout>
         <Route exact path='/' component={Home} />
-        <Route exact path='/user-search' component={UserSearch} />
-        <Route exact path='/random-tweet' component={RandomTweet} />
+        <Route path='/user-search' component={UserSearch} />
+        <Route path='/random-tweet' component={RandomTweet} />
       </Layout>
     </div>
   );

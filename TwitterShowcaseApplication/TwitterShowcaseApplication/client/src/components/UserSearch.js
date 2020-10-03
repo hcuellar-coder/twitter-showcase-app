@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, FormControl, Button } from 'react-bootstrap';
 
 function UserSearch() {
+    useEffect(() => {
+        console.log('running UserSearch!');
+    })
+
     return (
         <div>
             <Form inline>

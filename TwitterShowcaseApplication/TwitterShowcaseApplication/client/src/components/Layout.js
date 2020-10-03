@@ -7,8 +7,6 @@ function Layout(props) {
         <div>
             <NavBar />
             <Container>
-                {console.log(props)}
-                {console.log(props.children)}
                 {props.children}
             </Container>
         </div>
