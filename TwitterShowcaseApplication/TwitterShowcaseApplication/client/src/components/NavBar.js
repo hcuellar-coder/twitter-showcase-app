@@ -1,22 +1,23 @@
 import React from 'react';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 function NavBar() {
+
     return (
-        <Navbar>
-            <Navbar.Brand tag={Link} to='/'>Twitter Showcase Application</Navbar.Brand>
+        <Navbar bg="light" expand="md">
+            <Navbar.Brand tag={Link} to='/'>Twitter Showcase</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <NavItem>
-                        <Link to='/'>Home</Link>
+                        <NavLink className='Navlink' to='/' >Home </NavLink>
                     </NavItem>
                     <NavItem>
-                        <Link to='/user-search'>User Search</Link>
+                        <NavLink className='Navlink' to='/user-search'>User Search</NavLink>
                     </NavItem>
                     <NavItem>
-                        <Link to='/random-tweet'>Random Tweets</Link>
+                        <NavLink className='Navlink' to='/random-tweet'>Random Tweets</NavLink>
                     </NavItem>
                 </Nav>
             </Navbar.Collapse>

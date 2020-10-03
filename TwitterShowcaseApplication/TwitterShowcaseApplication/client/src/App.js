@@ -2,7 +2,6 @@ import React from 'react';
 import Home from './components/Home';
 import UserSearch from './components/UserSearch';
 import RandomTweet from './components/RandomTweet';
-import NavBar from './components/NavBar';
 import { Route } from 'react-router';
 import './App.css';
 import Layout from './components/Layout';
