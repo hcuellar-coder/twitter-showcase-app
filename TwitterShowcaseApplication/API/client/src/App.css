@@ -1,0 +1,15 @@
+.Navlink{
+    color: grey;
+    margin-right: 20px;
+}
+
+.Navlink:hover {
+    color: black;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.Navlink.active {
+    text-decoration: underline;
+    margin-right: 20px;
+}
