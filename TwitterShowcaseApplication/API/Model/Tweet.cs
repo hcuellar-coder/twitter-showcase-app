@@ -8,7 +8,6 @@ namespace API.Model
 {
     public class Tweet
     {
-
         public int id { get; set; }
         public string Text { get; set; }
 

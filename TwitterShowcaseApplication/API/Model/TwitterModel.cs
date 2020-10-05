@@ -9,10 +9,14 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace API.Model
 {
-    public class TwitterModel
+    public interface ITwitterModel
+    {
+        Task GetUserTimeline(string user);
+    }
+    public class TwitterModel : ITwitterModel
     {
         private readonly IHttpClientFactory _clientFactory;
-
+       
         public IEnumerable<Tweet> Tweets { get; private set; }
         public bool GetTweetError { get; set; }
 
@@ -36,7 +40,8 @@ namespace API.Model
                 using var responseStream = await response.Content.ReadAsStreamAsync();
                 Tweets = await JsonSerializer.DeserializeAsync<IEnumerable<Tweet>>(responseStream);
                 Console.WriteLine(Tweets);
-            } else
+            }
+            else
             {
                 GetTweetError = true;
                 Tweets = Array.Empty<Tweet>();

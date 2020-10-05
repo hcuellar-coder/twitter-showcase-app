@@ -10,13 +10,19 @@ function UserSearch() {
     })
 
     async function fetchUserTweets() {
-        await fetch(`api/tweets/timeline?user=${search}`).then(async (results) => {
+        await fetch('api/tweets').then(async (results) => {
             await (results.json()).then((results) => {
-
                 console.log(results);
                 setUserTweets(results);
             })
-        });
+        })
+        // await fetch(`api/tweets/timeline?user=${search}`).then(async (results) => {
+        //     await (results.json()).then((results) => {
+
+        //         console.log(results);
+        //         setUserTweets(results);
+        //     })
+        // });
 
         // await fetch('api/tweets').then(async (results) => {
         //     await (results.json()).then((results) => {
