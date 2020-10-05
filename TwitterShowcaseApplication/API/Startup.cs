@@ -27,6 +27,10 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // services.AddHttpClient("twitter", c=> {
+            //     c.BaseAddress = new Uri("https://api.twitter.com/1.1/");
+            //     c.DefaultRequestHeaders.Add("Authorization", "AAAAAAAAAAAAAAAAAAAAAI1AIQEAAAAAV6YTxBfzUm4FGF0BEHhChIzL1CE%3DKXa51y0ZHIyIImo3lvLaQ5b1yojbXpJgALtyrgWIpNzLuTdVwY");
+            // });
             services.AddControllers();
             services.AddSpaStaticFiles(config =>
             {
