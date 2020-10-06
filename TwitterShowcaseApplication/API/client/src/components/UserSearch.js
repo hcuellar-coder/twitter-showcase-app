@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, FormControl, Button } from 'react-bootstrap';
+import { Form, FormControl, Button, Card } from 'react-bootstrap';
 
 function UserSearch() {
     const [search, setSearch] = useState('');
@@ -10,26 +10,14 @@ function UserSearch() {
     })
 
     async function fetchUserTweets() {
-        await fetch('api/tweets').then(async (results) => {
-            await (results.json()).then((results) => {
-                console.log(results);
-                setUserTweets(results);
-            })
-        })
-        // await fetch(`api/tweets/timeline?user=${search}`).then(async (results) => {
-        //     await (results.json()).then((results) => {
-
-        //         console.log(results);
-        //         setUserTweets(results);
-        //     })
-        // });
-
-        // await fetch('api/tweets').then(async (results) => {
-        //     await (results.json()).then((results) => {
-        //         console.log(results);
-        //         setUserTweets(results);
-        //     })
-        // })
+        let searchInput = search;
+        searchInput = searchInput.split(" ").join('');
+        await fetch(`api/tweets/timeline?user=${searchInput}`).then(async (results) => {
+             await (results.json()).then((results) => {
+                 console.log(results);
+                 setUserTweets(results);
+             })
+         });
     }
 
     function handleOnChange(e) {
@@ -44,7 +32,6 @@ function UserSearch() {
     //     console.log(search);
     // }, [search]);
 
-
     return (
         <div>
             <h2>Lets search for a twitter user or content</h2>
@@ -54,7 +41,37 @@ function UserSearch() {
             </Form>
             {userTweets.length === 0
                 ? <div></div>
-                : userTweets.map((tweet, index) => (<div key={index}>{tweet.id}</div>))
+                : userTweets.map
+                    ((tweet, index) =>
+                        (
+                            <Card key={index}>
+                                {tweet.retweeted_status === null
+                                    ? (
+                                        <div>
+                                            <Card.Title>
+                                                <img src={tweet.user.profile_image_url_https} />
+                                                <span>{tweet.user.name}</span>
+                                                <span>@{tweet.user.screen_name}</span>
+                                            </Card.Title>
+                                            <Card.Body>{tweet.text}</Card.Body>
+                                        </div>
+                                    )
+                                    : (
+                                        <div>
+                                            <Card.Title>
+                                                <span>{tweet.user.name} Retweeted</span>
+                                                <br/>
+                                                <img src={tweet.retweeted_status.user.profile_image_url_https} />
+                                                <span>{tweet.retweeted_status.user.name}</span>
+                                                <span>@{tweet.retweeted_status.user.screen_name}</span>
+                                            </Card.Title>
+                                                <Card.Body>{tweet.retweeted_status.text}</Card.Body>
+                                        </div>
+                                        )
+                                }
+                            </Card>
+                        )
+                    )
             }
         </div>
     )

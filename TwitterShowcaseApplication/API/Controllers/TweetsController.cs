@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using API.Model;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace API.Controllers
 {
@@ -12,8 +14,8 @@ namespace API.Controllers
     public class TweetsController : ControllerBase
     {
         List<Tweet> _tweets = new List<Tweet>() {
-            new Tweet {id = 1, Text = "Hello World"},
-            new Tweet {id = 2, Text = "Hello Worlds"}
+            new Tweet {id = 1, text = "Hello World"},
+            new Tweet {id = 2, text = "Hello Worlds"}
         };
 
          private readonly ITwitterModel _twitterModel;
@@ -35,17 +37,11 @@ namespace API.Controllers
             return Ok(_tweets);
         }
 
-         [HttpGet("timeline")]
-         public IActionResult Get(string user)
-         {
-             Console.WriteLine("This is the user = " + user);
-             _twitterModel.GetUserTimeline(user);
-
-             if (_tweets.Count == 0)
-             {
-                 return NotFound("No List Found");
-             }
-             return Ok(_tweets);
-         }
+        [HttpGet("timeline")]
+        public Task<object> Get(string user)
+        {
+            Console.WriteLine("This is the user = " + user);
+            return _twitterModel.GetUserTimeline(user);
+        }
     }
 }

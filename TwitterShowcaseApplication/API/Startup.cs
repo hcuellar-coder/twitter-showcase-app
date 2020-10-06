@@ -30,7 +30,7 @@ namespace API
         {
              services.AddHttpClient("twitter", c=> {
                  c.BaseAddress = new Uri("https://api.twitter.com/1.1/");
-                 c.DefaultRequestHeaders.Add("Authorization", "AAAAAAAAAAAAAAAAAAAAAI1AIQEAAAAAV6YTxBfzUm4FGF0BEHhChIzL1CE%3DKXa51y0ZHIyIImo3lvLaQ5b1yojbXpJgALtyrgWIpNzLuTdVwY");
+                 c.DefaultRequestHeaders.Add("Authorization", "Bearer AAAAAAAAAAAAAAAAAAAAAI1AIQEAAAAAV6YTxBfzUm4FGF0BEHhChIzL1CE%3DKXa51y0ZHIyIImo3lvLaQ5b1yojbXpJgALtyrgWIpNzLuTdVwY");
              });
             services.AddControllers();
             services.AddSpaStaticFiles(config =>
