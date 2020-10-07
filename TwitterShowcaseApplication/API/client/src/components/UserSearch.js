@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, FormControl, Button, Card } from 'react-bootstrap';
+import { Form, FormControl, Button, Card, Image } from 'react-bootstrap';
 
 function UserSearch() {
     const [search, setSearch] = useState('');
@@ -49,7 +49,7 @@ function UserSearch() {
                                     ? (
                                         <div>
                                             <Card.Title>
-                                                <img src={tweet.user.profile_image_url_https} />
+                                                <Image src={tweet.user.profile_image_url_https} roundedCircle />
                                                 <span>{tweet.user.name}</span>
                                                 <span>@{tweet.user.screen_name}</span>
                                             </Card.Title>
@@ -61,7 +61,7 @@ function UserSearch() {
                                             <Card.Title>
                                                 <span>{tweet.user.name} Retweeted</span>
                                                 <br/>
-                                                <img src={tweet.retweeted_status.user.profile_image_url_https} />
+                                                <Image src={tweet.retweeted_status.user.profile_image_url_https} roundedCircle />
                                                 <span>{tweet.retweeted_status.user.name}</span>
                                                 <span>@{tweet.retweeted_status.user.screen_name}</span>
                                             </Card.Title>

@@ -1,36 +1,42 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Model;
+using System.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace API
 {
     public class Startup
     {
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment hostingEnvironment)
         {
             _configuration = configuration;
+            _hostingEnvironment = hostingEnvironment;
         }
 
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-             services.AddHttpClient("twitter", c=> {
+            var BEARERKEY = "";
+            if (_hostingEnvironment.IsDevelopment())
+            {
+                BEARERKEY = ConfigurationManager.AppSettings["BEARER"];
+            } else
+            {
+                BEARERKEY = Environment.GetEnvironmentVariable("BEARER");
+            }
+
+            services.AddHttpClient("twitter", c=> {
                  c.BaseAddress = new Uri("https://api.twitter.com/1.1/");
-                 c.DefaultRequestHeaders.Add("Authorization", "Bearer AAAAAAAAAAAAAAAAAAAAAI1AIQEAAAAAV6YTxBfzUm4FGF0BEHhChIzL1CE%3DKXa51y0ZHIyIImo3lvLaQ5b1yojbXpJgALtyrgWIpNzLuTdVwY");
+                 c.DefaultRequestHeaders.Add("Authorization", "Bearer "+BEARERKEY);
              });
             services.AddControllers();
             services.AddSpaStaticFiles(config =>
