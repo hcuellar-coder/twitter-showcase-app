@@ -13,10 +13,6 @@ namespace API.Controllers
     [ApiController]
     public class TweetsController : ControllerBase
     {
-        List<Tweet> _tweets = new List<Tweet>() {
-            new Tweet {id = 1, text = "Hello World"},
-            new Tweet {id = 2, text = "Hello Worlds"}
-        };
 
          private readonly ITwitterModel _twitterModel;
 
@@ -25,17 +21,6 @@ namespace API.Controllers
              _twitterModel = twittermodel;
          }
 
-
-        [HttpGet]
-        public IActionResult Get()
-        {
-            Console.WriteLine("In Get()");
-            if (_tweets.Count == 0)
-            {
-                return NotFound("No List Found");
-            }
-            return Ok(_tweets);
-        }
 
         [HttpGet("timeline")]
         public Task<object> Get(string user)

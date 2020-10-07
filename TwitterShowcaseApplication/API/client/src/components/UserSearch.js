@@ -53,7 +53,7 @@ function UserSearch() {
                                                 <span>{tweet.user.name}</span>
                                                 <span>@{tweet.user.screen_name}</span>
                                             </Card.Title>
-                                            <Card.Body>{tweet.text}</Card.Body>
+                                            <Card.Body>{tweet.full_text}</Card.Body>
                                         </div>
                                     )
                                     : (
@@ -65,7 +65,7 @@ function UserSearch() {
                                                 <span>{tweet.retweeted_status.user.name}</span>
                                                 <span>@{tweet.retweeted_status.user.screen_name}</span>
                                             </Card.Title>
-                                                <Card.Body>{tweet.retweeted_status.text}</Card.Body>
+                                                <Card.Body>{tweet.retweeted_status.full_text}</Card.Body>
                                         </div>
                                         )
                                 }
