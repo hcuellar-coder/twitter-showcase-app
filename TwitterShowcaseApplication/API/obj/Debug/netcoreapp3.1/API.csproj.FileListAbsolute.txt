@@ -116,8 +116,8 @@ C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseAppli
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\obj\Debug\netcoreapp3.1\API.csproj.CoreCompileInputs.cache
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\obj\Debug\netcoreapp3.1\API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\obj\Debug\netcoreapp3.1\API.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\Config\App.config
-C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\API.dll.config
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\Config\App.config
+C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\API.dll.config
