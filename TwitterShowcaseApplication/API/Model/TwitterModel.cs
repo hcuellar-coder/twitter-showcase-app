@@ -39,7 +39,6 @@ namespace API.Model
             {
                 var responseStream = await response.Content.ReadAsStringAsync();
                 tweets = JsonConvert.DeserializeObject<List<Tweet>>(responseStream);
-                Console.WriteLine(tweets.Count);
                 errorString = null;
                 return tweets;
                 /*var responseStream = await response.Content.ReadAsStringAsync();
