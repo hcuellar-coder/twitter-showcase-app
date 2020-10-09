@@ -55,6 +55,10 @@ function UserSearch() {
         let iteration = 0;
         let retweet = false;
 
+        if (tempTweets.statuses !== null) {
+            tempTweets = tempTweets.statuses;
+        }
+
         for (let tweet of tempTweets) {
             if (tweet.retweeted_status !== null) {
                 retweet = true;
