@@ -15,10 +15,12 @@ namespace API.Model
     public interface ITwitterModel
     {
         Task<object> GetUserTimeline(string user);
+        Task<object> GetContentSearch(string content);
     }
     public class TwitterModel : ITwitterModel
     {
         List<Tweet> tweets;
+        ContentTweet ContentTweets;
         string errorString;
         private readonly IHttpClientFactory _clientFactory;
 
@@ -41,8 +43,29 @@ namespace API.Model
                 tweets = JsonConvert.DeserializeObject<List<Tweet>>(responseStream);
                 errorString = null;
                 return tweets;
-                /*var responseStream = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<object>(responseStream);*/
+            }
+            else
+            {
+                errorString = $"There was an error getting our tweets: {response.ReasonPhrase}";
+                throw new Exception(errorString);
+
+            }
+        }
+
+        public async Task<object> GetContentSearch(string content)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                "search/tweets.json?tweet_mode=extended&q=" + content + "&result_type=recent");
+            var client = _clientFactory.CreateClient("twitter");
+
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                ContentTweets = JsonConvert.DeserializeObject<ContentTweet>(responseStream);
+                errorString = null;
+                return ContentTweets;
             }
             else
             {

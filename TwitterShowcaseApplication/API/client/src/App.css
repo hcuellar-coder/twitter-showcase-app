@@ -14,6 +14,12 @@
     margin-right: 20px;
 }
 
+.media_photo {
+    overflow: hidden;
+    max-height: 383;
+    max-width: 680;
+}
+
 #search-bar-div{
     display: flex;
     flex-direction: row;

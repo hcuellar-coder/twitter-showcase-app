@@ -14,12 +14,12 @@ namespace API.Controllers
     public class TweetsController : ControllerBase
     {
 
-         private readonly ITwitterModel _twitterModel;
+        private readonly ITwitterModel _twitterModel;
 
-         public TweetsController(ITwitterModel twittermodel)
-         {
-             _twitterModel = twittermodel;
-         }
+        public TweetsController(ITwitterModel twittermodel)
+        {
+            _twitterModel = twittermodel;
+        }
 
 
         [HttpGet("timeline")]
@@ -27,6 +27,13 @@ namespace API.Controllers
         {
             Console.WriteLine("This is the user = " + user);
             return _twitterModel.GetUserTimeline(user);
+        }
+
+        [HttpGet("search")]
+        public Task<object> GetContent(string content)
+        {
+            Console.WriteLine("This is the content = " + content);
+            return _twitterModel.GetContentSearch(content);
         }
     }
 }
