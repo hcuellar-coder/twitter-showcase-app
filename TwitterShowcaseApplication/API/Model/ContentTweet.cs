@@ -13,7 +13,6 @@ namespace API.Model
     public class Search_Metadata
     {
         public float completed_in { get; set; }
-        public long max_id { get; set; }
         public string max_id_str { get; set; }
         public string next_results { get; set; }
         public string query { get; set; }
@@ -30,11 +29,11 @@ namespace API.Model
 
 
 
-    
+
     public class Status
     {
         public string created_at { get; set; }
-        public long id { get; set; }
+        public string id_str { get; set; }
         public string full_text { get; set; }
         public User2 user { get; set; }
         public Entities2 entities { get; set; }
@@ -62,7 +61,6 @@ namespace API.Model
     {
         public string screen_name { get; set; }
         public string name { get; set; }
-        public long id { get; set; }
         public int[] indices { get; set; }
     }
 
@@ -73,7 +71,7 @@ namespace API.Model
         public string display_url { get; set; }
         public int[] indices { get; set; }
     }
-    
+
     public class Extended_Entities2
     {
         public Medium4[] media { get; set; }
@@ -81,7 +79,6 @@ namespace API.Model
 
     public class Medium4
     {
-        public long id { get; set; }
         public string id_str { get; set; }
         public int[] indices { get; set; }
         public string media_url { get; set; }
@@ -146,7 +143,6 @@ namespace API.Model
 
     public class User2
     {
-        public long id { get; set; }
         public string name { get; set; }
         public string screen_name { get; set; }
         public string profile_image_url_https { get; set; }
@@ -154,7 +150,6 @@ namespace API.Model
     public class Retweeted_Status2
     {
         public string created_at { get; set; }
-        public long id { get; set; }
         public string full_text { get; set; }
         public Entities3 entities { get; set; }
         public Extended_Entities3 extended_entities { get; set; }
@@ -179,7 +174,6 @@ namespace API.Model
     {
         public string screen_name { get; set; }
         public string name { get; set; }
-        public long id { get; set; }
         public int[] indices { get; set; }
     }
 
@@ -190,7 +184,7 @@ namespace API.Model
         public string display_url { get; set; }
         public int[] indices { get; set; }
     }
-    
+
     public class Extended_Entities3
     {
         public Medium6[] media { get; set; }
@@ -198,7 +192,6 @@ namespace API.Model
 
     public class Medium6
     {
-        public long id { get; set; }
         public string id_str { get; set; }
         public int[] indices { get; set; }
         public string media_url { get; set; }
@@ -263,7 +256,6 @@ namespace API.Model
 
     public class User3
     {
-        public long id { get; set; }
         public string name { get; set; }
         public string screen_name { get; set; }
         public string profile_image_url_https { get; set; }

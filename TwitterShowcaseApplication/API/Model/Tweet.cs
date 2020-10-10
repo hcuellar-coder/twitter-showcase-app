@@ -8,7 +8,7 @@ namespace API.Model
     public class Tweet
     {
         public string created_at { get; set; }
-        public long id { get; set; }
+        public string id_str { get; set; }
         public string full_text { get; set; }
         public User user { get; set; }
         public Entities entities { get; set; }
@@ -36,7 +36,6 @@ namespace API.Model
     {
         public string screen_name { get; set; }
         public string name { get; set; }
-        public long id { get; set; }
         public int[] indices { get; set; }
     }
 
@@ -54,7 +53,6 @@ namespace API.Model
 
     public class Medium
     {
-        public long id { get; set; }
         public string id_str { get; set; }
         public int[] indices { get; set; }
         public string media_url { get; set; }
@@ -112,7 +110,6 @@ namespace API.Model
     }
     public class User
     {
-        public long id { get; set; }
         public string name { get; set; }
         public string screen_name { get; set; }
         public string profile_image_url_https { get; set; }
@@ -120,7 +117,6 @@ namespace API.Model
     public class Retweeted_Status
     {
         public string created_at { get; set; }
-        public long id { get; set; }
         public string full_text { get; set; }
         public Entities1 entities { get; set; }
         public Extended_Entities1 extended_entities { get; set; }
@@ -143,7 +139,6 @@ namespace API.Model
     {
         public string screen_name { get; set; }
         public string name { get; set; }
-        public long id { get; set; }
         public int[] indices { get; set; }
     }
     public class Url1
@@ -159,7 +154,6 @@ namespace API.Model
     }
     public class Medium2
     {
-        public long id { get; set; }
         public string id_str { get; set; }
         public int[] indices { get; set; }
         public string media_url { get; set; }
@@ -216,7 +210,6 @@ namespace API.Model
     }
     public class User1
     {
-        public long id { get; set; }
         public string name { get; set; }
         public string screen_name { get; set; }
         public string profile_image_url_https { get; set; }

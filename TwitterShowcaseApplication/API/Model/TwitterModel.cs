@@ -32,7 +32,7 @@ namespace API.Model
         public async Task<object> GetUserTimeline(string user)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
-                "statuses/user_timeline.json?tweet_mode=extended&screen_name=" + user);
+                "statuses/user_timeline.json?count=10&tweet_mode=extended&screen_name=" + user);
             var client = _clientFactory.CreateClient("twitter");
 
             var response = await client.SendAsync(request);
@@ -55,7 +55,7 @@ namespace API.Model
         public async Task<object> GetContentSearch(string content)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
-                "search/tweets.json?tweet_mode=extended&q=" + content + "&result_type=recent");
+                "search/tweets.json?count=10&tweet_mode=extended&q=" + content + "&result_type=recent");
             var client = _clientFactory.CreateClient("twitter");
 
             var response = await client.SendAsync(request);
