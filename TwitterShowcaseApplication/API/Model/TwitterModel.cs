@@ -34,7 +34,7 @@ namespace API.Model
         public async Task<object> GetUserTimeline(string user)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
-                "statuses/user_timeline.json?count=10&tweet_mode=extended&screen_name=" + user);
+                "statuses/user_timeline.json?count=20&tweet_mode=extended&screen_name=" + user);
             var client = _clientFactory.CreateClient("twitter");
 
             var response = await client.SendAsync(request);

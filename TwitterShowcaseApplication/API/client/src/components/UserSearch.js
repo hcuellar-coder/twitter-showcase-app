@@ -8,6 +8,7 @@ import parse from 'html-react-parser';
 function UserSearch() {
     const [search, setSearch] = useState('');
     const [userTweets, setUserTweets] = useState([]);
+    const [lastId, setLastId] = useState('');
 
     async function fetchUserTweets(e) {
         e.preventDefault();
@@ -23,12 +24,38 @@ function UserSearch() {
         });
     }
 
+    async function fetchCursorUserTweets(e) {
+        e.preventDefault();
+        let searchInput = search;
+        searchInput = searchInput.split(" ").join('');
+        await fetch(`api/tweets/timeline?user=${searchInput}&lastId=${lastId}`).then(async (results) => {
+            await (results.json()).then(async (results) => {
+                console.log(results);
+                await parseResults(results).then((results) => {
+                    setUserTweets(results);
+                });
+            })
+        });
+    }
+
     async function fetchContentTweets(e) {
         // keep search limited to 10 key words and operators
         e.preventDefault();
         let searchInput = search;
-        searchInput = searchInput.split(" ").join('');
         await fetch(`api/tweets/search?content=${searchInput}`).then(async (results) => {
+            await (results.json()).then(async (results) => {
+                console.log(results);
+                await parseResults(results).then((results) => {
+                    setUserTweets(results);
+                });
+            })
+        });
+    }
+
+    async function fetchCursorContentTweets(e) {
+        e.preventDefault();
+        let searchInput = search;
+        await fetch(`api/tweets/cursor_search?content=${searchInput}&lastId=${lastId}`).then(async (results) => {
             await (results.json()).then(async (results) => {
                 console.log(results);
                 await parseResults(results).then((results) => {
@@ -41,12 +68,6 @@ function UserSearch() {
     function handleOnChange(e) {
         e.preventDefault();
         setSearch(e.target.value);
-    }
-
-    function handleEnterKey(e) {
-        if (e.charCode === 13) {
-            fetchUserTweets(e);
-        }
     }
 
     async function parseResults(results) {
@@ -66,6 +87,7 @@ function UserSearch() {
             }
             console.log('tweet ', tweet);
             text = tweet.full_text;
+            setLastId(tweet.id_str);
             if (tweet.entities && tweet.entities !== null) {
                 if (tweet.entities.hashtags && tweet.entities.hashtags !== null) {
                     for (let hashtag of tweet.entities.hashtags) {
@@ -114,6 +136,12 @@ function UserSearch() {
                                 retweet ? tempTweets[iteration].retweeted_status.full_text = text : tempTweets[iteration].full_text = text;
                                 break;
                             case 'animated_gif':
+                                console.log(media);
+                                text = text.replace(`${media.url}`, "<div><video autoplay loop muted width=\"" + `${width}` + "\" height=\"" + `${height}`
+                                    + "\" preload=\"auto\" playsinline poster=\"" + `${media.media_url_https}` + "\" src=\""
+                                    + `${media.video_info.variants[0].url}` + "\" type=\"" + `${media.video_info.variants[0].content_type}`
+                                    + "autoplay\"></video></div>");
+                                retweet ? tempTweets[iteration].retweeted_status.full_text = text : tempTweets[iteration].full_text = text;
                                 break;
                             default:
                                 break;
@@ -131,7 +159,7 @@ function UserSearch() {
         <div>
             <h2>Lets search for a twitter user or content</h2>
             <div id="search-bar-div">
-                <Form.Control type="text" placeholder="Search" className="mr-sm-2" onChange={handleOnChange} value={search} onKeyPress={handleEnterKey} />
+                <Form.Control type="text" placeholder="Search" className="mr-sm-2" onChange={handleOnChange} value={search} />
                 <Button variant="outline-success" onClick={fetchUserTweets}>Search User</Button>
                 <Button variant="outline-success" onClick={fetchContentTweets}>Search Content</Button>
             </div>
