@@ -55,7 +55,7 @@ function UserSearch() {
         let iteration = 0;
         let retweet = false;
 
-        if (tempTweets.statuses !== null) {
+        if (tempTweets.statuses !== undefined) {
             tempTweets = tempTweets.statuses;
         }
 
@@ -92,7 +92,6 @@ function UserSearch() {
             } if (tweet.extended_entities && tweet.extended_entities !== null) {
                 if (tweet.extended_entities.media && tweet.extended_entities.media !== null) {
                     for (let media of tweet.extended_entities.media) {
-                        console.log('media', media.type);
                         let url = '';
                         let format = '';
                         let height = 383;
