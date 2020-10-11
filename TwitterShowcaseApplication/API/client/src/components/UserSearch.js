@@ -4,20 +4,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import parse from 'html-react-parser';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 function UserSearch() {
     const [search, setSearch] = useState('');
     const [userTweets, setUserTweets] = useState([]);
     const [lastId, setLastId] = useState('');
+    const [userSearchBool, setUserSearchBool] = useState(false);
 
     async function fetchUserTweets(e) {
-        e.preventDefault();
+        setUserSearchBool(true);
+        console.log('fetchUserTweets');
+        //e.preventDefault();
         let searchInput = search;
         searchInput = searchInput.split(" ").join('');
         await fetch(`api/tweets/timeline?user=${searchInput}`).then(async (results) => {
             await (results.json()).then(async (results) => {
-                console.log(results);
                 await parseResults(results).then((results) => {
+
                     setUserTweets(results);
                 });
             })
@@ -25,27 +29,35 @@ function UserSearch() {
     }
 
     async function fetchCursorUserTweets(e) {
-        e.preventDefault();
+        // e.preventDefault();
+        console.log('fetchCursorUserTweets');
         let searchInput = search;
         searchInput = searchInput.split(" ").join('');
-        await fetch(`api/tweets/timeline?user=${searchInput}&lastId=${lastId}`).then(async (results) => {
+        console.log(`api/tweets/cursor_timeline?user=${searchInput}&lastId=${lastId}`);
+        await fetch(`api/tweets/cursor_timeline?user=${searchInput}&lastId=${lastId}`).then(async (results) => {
+            console.log('result = ', results);
             await (results.json()).then(async (results) => {
-                console.log(results);
+                console.log('result = ', results);
                 await parseResults(results).then((results) => {
-                    setUserTweets(results);
+                    console.log('result = ', results);
+                    const newList = [...userTweets, ...results];
+                    console.log('newList = ', newList);
+                    setUserTweets(newList);
                 });
             })
         });
     }
 
     async function fetchContentTweets(e) {
+        setUserSearchBool(false);
+        console.log('fetchContentTweets');
         // keep search limited to 10 key words and operators
-        e.preventDefault();
+        //e.preventDefault();
         let searchInput = search;
         await fetch(`api/tweets/search?content=${searchInput}`).then(async (results) => {
             await (results.json()).then(async (results) => {
-                console.log(results);
                 await parseResults(results).then((results) => {
+
                     setUserTweets(results);
                 });
             })
@@ -53,12 +65,13 @@ function UserSearch() {
     }
 
     async function fetchCursorContentTweets(e) {
-        e.preventDefault();
+        console.log('fetchCursorContentTweets');
+        //e.preventDefault();
         let searchInput = search;
         await fetch(`api/tweets/cursor_search?content=${searchInput}&lastId=${lastId}`).then(async (results) => {
             await (results.json()).then(async (results) => {
-                console.log(results);
                 await parseResults(results).then((results) => {
+                    // const newList = [...userTweets, results];
                     setUserTweets(results);
                 });
             })
@@ -70,24 +83,59 @@ function UserSearch() {
         setSearch(e.target.value);
     }
 
+    //userSearchBool ends up changing on ever call due to listener.
+    function handleScroll() {
+        console.log('userSearchBool = ', userSearchBool);
+        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+
+        // userSearchBool ? fetchCursorUserTweets() : fetchCursorContentTweets()
+        console.log('Fetch more list items!');
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+    }, [])
+
+    useEffect(() => {
+        console.log(userTweets);
+    }, [userTweets])
+
+    useEffect(() => {
+        console.log(lastId);
+    }, [lastId])
+
+    useEffect(() => {
+        console.log(userSearchBool);
+    }, [userSearchBool])
+
     async function parseResults(results) {
+        console.log('results = ', results);
+        console.log('parsing');
         let tempTweets = results;
         let text = '';
         let iteration = 0;
         let retweet = false;
+        let last_id = '';
 
         if (tempTweets.statuses !== undefined) {
             tempTweets = tempTweets.statuses;
         }
 
         for (let tweet of tempTweets) {
+            console.log('tweet = ', tweet);
+            last_id = tweet.id_str;
+            console.log('id_str =', tweet.id_str);
             if (tweet.retweeted_status !== null) {
                 retweet = true;
                 tweet = tweet.retweeted_status;
             }
-            console.log('tweet ', tweet);
+            console.log('iteration =', iteration);
+            // console.log('tweet ', tweet);
             text = tweet.full_text;
-            setLastId(tweet.id_str);
+            // setLastId(tweet.id_str);
             if (tweet.entities && tweet.entities !== null) {
                 if (tweet.entities.hashtags && tweet.entities.hashtags !== null) {
                     for (let hashtag of tweet.entities.hashtags) {
@@ -136,7 +184,6 @@ function UserSearch() {
                                 retweet ? tempTweets[iteration].retweeted_status.full_text = text : tempTweets[iteration].full_text = text;
                                 break;
                             case 'animated_gif':
-                                console.log(media);
                                 text = text.replace(`${media.url}`, "<div><video autoplay loop muted width=\"" + `${width}` + "\" height=\"" + `${height}`
                                     + "\" preload=\"auto\" playsinline poster=\"" + `${media.media_url_https}` + "\" src=\""
                                     + `${media.video_info.variants[0].url}` + "\" type=\"" + `${media.video_info.variants[0].content_type}`
@@ -152,17 +199,12 @@ function UserSearch() {
             retweet = false;
             iteration++;
         }
+        setLastId(last_id);
         return tempTweets;
     }
 
-    return (
+    const Tweets = () => (
         <div>
-            <h2>Lets search for a twitter user or content</h2>
-            <div id="search-bar-div">
-                <Form.Control type="text" placeholder="Search" className="mr-sm-2" onChange={handleOnChange} value={search} />
-                <Button variant="outline-success" onClick={fetchUserTweets}>Search User</Button>
-                <Button variant="outline-success" onClick={fetchContentTweets}>Search Content</Button>
-            </div>
             {userTweets.length === 0
                 ? <div></div>
                 : userTweets.map
@@ -213,6 +255,25 @@ function UserSearch() {
                         )
                     )
             }
+        </div>
+    )
+
+    return (
+        <div>
+            <h2>Lets search for a twitter user or content</h2>
+            <div id="search-bar-div">
+                <Form.Control type="text" placeholder="Search" className="mr-sm-2" onChange={handleOnChange} value={search} />
+                <Button variant="outline-success" onClick={fetchUserTweets}>Search User</Button>
+                <Button variant="outline-success" onClick={fetchContentTweets}>Search Content</Button>
+            </div>
+            {/* <InfiniteScroll
+                dataLength={userTweets.length}
+                next={userSearchBool ? fetchCursorUserTweets : fetchCursorContentTweets}
+                hasMore={true}
+                loader={<h4>Loading...</h4>}
+            > */}
+            <Tweets />
+            {/* </InfiniteScroll> */}
         </div>
     )
 }
