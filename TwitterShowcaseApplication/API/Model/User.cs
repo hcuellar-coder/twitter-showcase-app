@@ -14,6 +14,7 @@ namespace API.Model
         public int followers_count { get; set; }
         public int friends_count { get; set; }
         public string profile_image_url_https { get; set; }
+        public string profile_banner_url { get; set; }
     }
 
 }

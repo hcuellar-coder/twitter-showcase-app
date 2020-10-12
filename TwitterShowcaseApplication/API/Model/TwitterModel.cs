@@ -19,12 +19,14 @@ namespace API.Model
         Task<object> GetContentSearch(string content);
         Task<object> GetCursorContentSearch(string content, long lastId);
         Task<object> GetUser(string user);
+        Task<object> GetUsersRandom(string user, string max_id);
     }
     public class TwitterModel : ITwitterModel
     {
         List<Tweet> tweets;
         ContentTweet ContentTweets;
         User userInfo;
+        Tweet randomTweet;
         string errorString;
         private readonly IHttpClientFactory _clientFactory;
 
@@ -138,6 +140,28 @@ namespace API.Model
                 userInfo = JsonConvert.DeserializeObject<User>(responseStream);
                 errorString = null;
                 return userInfo;
+            }
+            else
+            {
+                errorString = $"There was an error getting our tweets: {response.ReasonPhrase}";
+                throw new Exception(errorString);
+
+            }
+        }
+
+        public async Task<object> GetUsersRandom(string user, string max_id)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                "users/show.json?screen_name=" + user);
+            var client = _clientFactory.CreateClient("twitter");
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                randomTweet = JsonConvert.DeserializeObject<Tweet>(responseStream);
+                errorString = null;
+                return randomTweet;
             }
             else
             {
