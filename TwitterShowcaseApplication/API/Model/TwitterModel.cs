@@ -19,7 +19,7 @@ namespace API.Model
         Task<object> GetContentSearch(string content);
         Task<object> GetCursorContentSearch(string content, long lastId);
         Task<object> GetUser(string user);
-        Task<object> GetUsersRandom(string user, string max_id);
+        Task<object> GetUsersRandom(string user);
     }
     public class TwitterModel : ITwitterModel
     {
@@ -149,17 +149,20 @@ namespace API.Model
             }
         }
 
-        public async Task<object> GetUsersRandom(string user, string max_id)
+        public async Task<object> GetUsersRandom(string user)
         {
+            var rand = new Random();
+            int num = rand.Next(0, 200);
             var request = new HttpRequestMessage(HttpMethod.Get,
-                "users/show.json?screen_name=" + user);
+                "statuses/user_timeline.json?count=200&tweet_mode=extended&screen_name=" + user);
             var client = _clientFactory.CreateClient("twitter");
             var response = await client.SendAsync(request);
 
             if (response.IsSuccessStatusCode)
             {
                 var responseStream = await response.Content.ReadAsStringAsync();
-                randomTweet = JsonConvert.DeserializeObject<Tweet>(responseStream);
+                tweets = JsonConvert.DeserializeObject<List<Tweet>>(responseStream);
+                randomTweet = tweets[num];
                 errorString = null;
                 return randomTweet;
             }
