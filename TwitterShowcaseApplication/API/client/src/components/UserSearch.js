@@ -4,24 +4,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import parse from 'html-react-parser';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 function UserSearch() {
     const [search, setSearch] = useState('');
     const [userTweets, setUserTweets] = useState([]);
     const [lastId, setLastId] = useState('');
     const [userSearchBool, setUserSearchBool] = useState(false);
+    const [isFetching, setIsFetching] = useState(false);
 
     async function fetchUserTweets(e) {
         setUserSearchBool(true);
         console.log('fetchUserTweets');
-        //e.preventDefault();
         let searchInput = search;
         searchInput = searchInput.split(" ").join('');
         await fetch(`api/tweets/timeline?user=${searchInput}`).then(async (results) => {
             await (results.json()).then(async (results) => {
+                console.log('before parse = ', results);
                 await parseResults(results).then((results) => {
-
                     setUserTweets(results);
                 });
             })
@@ -29,19 +28,15 @@ function UserSearch() {
     }
 
     async function fetchCursorUserTweets(e) {
-        // e.preventDefault();
         console.log('fetchCursorUserTweets');
+        setIsFetching(false);
         let searchInput = search;
         searchInput = searchInput.split(" ").join('');
-        console.log(`api/tweets/cursor_timeline?user=${searchInput}&lastId=${lastId}`);
         await fetch(`api/tweets/cursor_timeline?user=${searchInput}&lastId=${lastId}`).then(async (results) => {
-            console.log('result = ', results);
             await (results.json()).then(async (results) => {
-                console.log('result = ', results);
+                console.log('before parse = ', results);
                 await parseResults(results).then((results) => {
-                    console.log('result = ', results);
                     const newList = [...userTweets, ...results];
-                    console.log('newList = ', newList);
                     setUserTweets(newList);
                 });
             })
@@ -51,8 +46,6 @@ function UserSearch() {
     async function fetchContentTweets(e) {
         setUserSearchBool(false);
         console.log('fetchContentTweets');
-        // keep search limited to 10 key words and operators
-        //e.preventDefault();
         let searchInput = search;
         await fetch(`api/tweets/search?content=${searchInput}`).then(async (results) => {
             await (results.json()).then(async (results) => {
@@ -66,13 +59,15 @@ function UserSearch() {
 
     async function fetchCursorContentTweets(e) {
         console.log('fetchCursorContentTweets');
-        //e.preventDefault();
+        setIsFetching(false);
         let searchInput = search;
         await fetch(`api/tweets/cursor_search?content=${searchInput}&lastId=${lastId}`).then(async (results) => {
             await (results.json()).then(async (results) => {
+                console.log('before parse = ', results);
                 await parseResults(results).then((results) => {
-                    // const newList = [...userTweets, results];
-                    setUserTweets(results);
+                    console.log('after parse = ', results);
+                    const newList = [...userTweets, ...results];
+                    setUserTweets(newList);
                 });
             })
         });
@@ -83,14 +78,12 @@ function UserSearch() {
         setSearch(e.target.value);
     }
 
-    //userSearchBool ends up changing on ever call due to listener.
     function handleScroll() {
-        console.log('userSearchBool = ', userSearchBool);
         if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
-
-        // userSearchBool ? fetchCursorUserTweets() : fetchCursorContentTweets()
+        setIsFetching(true);
         console.log('Fetch more list items!');
     }
+
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -100,20 +93,13 @@ function UserSearch() {
     }, [])
 
     useEffect(() => {
-        console.log(userTweets);
-    }, [userTweets])
+        if (!isFetching) return;
+        console.log('userSearchBool = ', userSearchBool);
+        userSearchBool ? fetchCursorUserTweets() : fetchCursorContentTweets()
+    }, [isFetching])
 
-    useEffect(() => {
-        console.log(lastId);
-    }, [lastId])
-
-    useEffect(() => {
-        console.log(userSearchBool);
-    }, [userSearchBool])
 
     async function parseResults(results) {
-        console.log('results = ', results);
-        console.log('parsing');
         let tempTweets = results;
         let text = '';
         let iteration = 0;
@@ -125,17 +111,13 @@ function UserSearch() {
         }
 
         for (let tweet of tempTweets) {
-            console.log('tweet = ', tweet);
+            console.log(tweet);
             last_id = tweet.id_str;
-            console.log('id_str =', tweet.id_str);
             if (tweet.retweeted_status !== null) {
                 retweet = true;
                 tweet = tweet.retweeted_status;
             }
-            console.log('iteration =', iteration);
-            // console.log('tweet ', tweet);
             text = tweet.full_text;
-            // setLastId(tweet.id_str);
             if (tweet.entities && tweet.entities !== null) {
                 if (tweet.entities.hashtags && tweet.entities.hashtags !== null) {
                     for (let hashtag of tweet.entities.hashtags) {
@@ -145,8 +127,9 @@ function UserSearch() {
                     }
                 }
                 if (tweet.entities.urls && tweet.entities.urls !== null) {
+                    console.log('url!');
                     for (let urls of tweet.entities.urls) {
-                        text = text.replace(`${urls.url}`, "<a href=\"" + `${urls.url}` + "\">" + `${urls.display_url}` + "</a>");
+                        text = text.replace(`${urls.url}`, "<a href=\"" + `${urls.expanded_url}` + "\">" + `${urls.display_url}` + "</a>");
                         retweet ? tempTweets[iteration].retweeted_status.full_text = text : tempTweets[iteration].full_text = text;
                     }
                 }
@@ -164,6 +147,8 @@ function UserSearch() {
                     for (let media of tweet.extended_entities.media) {
                         let url = '';
                         let format = '';
+                        let video = '';
+                        let videoContentType = '';
                         let height = 383;
                         let width = 680;
                         switch (media.type) {
@@ -175,11 +160,21 @@ function UserSearch() {
                                 retweet ? tempTweets[iteration].retweeted_status.full_text = text : tempTweets[iteration].full_text = text;
                                 break;
                             case 'video':
+                                for (let variant of media.video_info.variants) {
+                                    let bitrate = 0;
+                                    if (variant.content_type === 'video/mp4') {
+                                        if (variant.bitrate > bitrate) {
+                                            bitrate = variant.bitrate;
+                                            video = variant.url;
+                                            videoContentType = variant.content_type;
+                                        }
+                                    }
+                                }
                                 url = (media.media_url_https).slice(0, -4);
                                 format = (media.media_url_https).slice(-3);
                                 text = text.replace(`${media.url}`, "<div><video width=\"" + `${width}` + "\" height=\"" + `${height}`
                                     + "\" preload=\"none\" playsinline controls poster=\"" + `${url}` + "?format=" + `${format}` +
-                                    "&name=small\"><source src=\"" + `${media.video_info.variants[3].url}` + "\" type=\"" + `${media.video_info.variants[3].content_type}`
+                                    "&name=small\"><source src=\"" + `${video}` + "\" type=\"" + `${videoContentType}`
                                     + "\"></video></div>");
                                 retweet ? tempTweets[iteration].retweeted_status.full_text = text : tempTweets[iteration].full_text = text;
                                 break;
@@ -211,8 +206,8 @@ function UserSearch() {
                     ((tweet, index) =>
                         (
                             <Card key={index}>
-                                {tweet.retweeted_status === null
-                                    ? (
+                                {tweet.retweeted_status === null ?
+                                    (
                                         <div>
                                             <Card.Title>
                                                 <Image src={tweet.user.profile_image_url_https} roundedCircle />
@@ -266,14 +261,7 @@ function UserSearch() {
                 <Button variant="outline-success" onClick={fetchUserTweets}>Search User</Button>
                 <Button variant="outline-success" onClick={fetchContentTweets}>Search Content</Button>
             </div>
-            {/* <InfiniteScroll
-                dataLength={userTweets.length}
-                next={userSearchBool ? fetchCursorUserTweets : fetchCursorContentTweets}
-                hasMore={true}
-                loader={<h4>Loading...</h4>}
-            > */}
             <Tweets />
-            {/* </InfiniteScroll> */}
         </div>
     )
 }

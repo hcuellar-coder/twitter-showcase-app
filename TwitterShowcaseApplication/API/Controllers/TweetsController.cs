@@ -25,15 +25,12 @@ namespace API.Controllers
         [HttpGet("timeline")]
         public Task<object> Get(string user)
         {
-            Console.WriteLine("This is the user = " + user);
             return _twitterModel.GetUserTimeline(user);
         }
 
         [HttpGet("cursor_timeline")]
         public Task<object> GetCursorUser(string user, string lastId)
         {
-            Console.WriteLine("This is the user = " + user);
-            Console.WriteLine("This is the maxId = " + lastId);
             long long_lastId = long.Parse(lastId);
             long_lastId = long_lastId - 1;
             return _twitterModel.GetCursorUserTimeline(user, long_lastId);
@@ -42,18 +39,22 @@ namespace API.Controllers
         [HttpGet("search")]
         public Task<object> GetContent(string content)
         {
-            Console.WriteLine("This is the content = " + content);
             return _twitterModel.GetContentSearch(content);
         }
 
         [HttpGet("cursor_search")]
         public Task<object> GetCursorContent(string content, string lastId)
         {
-            Console.WriteLine("This is the content = " + content);
-            Console.WriteLine("This is the maxId = " + lastId);
             long long_lastId = long.Parse(lastId);
             long_lastId = long_lastId - 1;
             return _twitterModel.GetCursorContentSearch(content, long_lastId);
+        }
+
+
+        [HttpGet("users")]
+        public Task<object> GetUsers(string user)
+        {
+            return _twitterModel.GetUser(user);
         }
     }
 }

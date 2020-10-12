@@ -10,7 +10,7 @@ namespace API.Model
         public string created_at { get; set; }
         public string id_str { get; set; }
         public string full_text { get; set; }
-        public User user { get; set; }
+        public Tweet_User user { get; set; }
         public Entities entities { get; set; }
         public Extended_Entities extended_entities { get; set; }
         public Retweeted_Status retweeted_status { get; set; }
@@ -108,7 +108,7 @@ namespace API.Model
         public string content_type { get; set; }
         public string url { get; set; }
     }
-    public class User
+    public class Tweet_User
     {
         public string name { get; set; }
         public string screen_name { get; set; }
