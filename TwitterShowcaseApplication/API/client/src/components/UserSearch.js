@@ -111,46 +111,28 @@ function UserSearch() {
                     ((tweet, index) =>
                         (
                             <Card key={index}>
-                                {tweet.retweeted_status === null ?
-                                    (
+                                <div>
+                                    <Card.Title>
+                                        {tweet.retweet === undefined
+                                            ? <div></div>
+                                            : <span><FontAwesomeIcon icon={faRetweet} />{tweet.searchedUserName} Retweeted</span>
+                                        }
                                         <div>
-                                            <Card.Title>
-                                                <Image src={tweet.user.profile_image_url_https} roundedCircle />
-                                                <span>{tweet.user.name}</span>
-                                                <span>@{tweet.user.screen_name}</span>
-                                            </Card.Title>
-                                            <Card.Body>
-                                                {parse(tweet.full_text)}
-                                                <div>
-                                                    <FontAwesomeIcon icon={faRetweet} />
-                                                    {tweet.retweet_count}
-                                                    <FontAwesomeIcon icon={faHeart} />
-                                                    {tweet.favorite_count}
-                                                </div>
-                                            </Card.Body>
+                                            <Image src={tweet.user.profile_image_url_https} roundedCircle />
+                                            <span>{tweet.user.name}</span>
+                                            <span>@{tweet.user.screen_name}</span>
                                         </div>
-                                    )
-                                    : (
+                                    </Card.Title>
+                                    <Card.Body>
+                                        {parse(tweet.full_text)}
                                         <div>
-                                            <Card.Title>
-                                                <span>{tweet.user.name} Retweeted</span>
-                                                <br />
-                                                <Image src={tweet.retweeted_status.user.profile_image_url_https} roundedCircle />
-                                                <span>{tweet.retweeted_status.user.name}</span>
-                                                <span>@{tweet.retweeted_status.user.screen_name}</span>
-                                            </Card.Title>
-                                            <Card.Body>
-                                                {parse(tweet.retweeted_status.full_text)}
-                                                <div>
-                                                    <FontAwesomeIcon icon={faRetweet} />
-                                                    {tweet.retweet_count}
-                                                    <FontAwesomeIcon icon={faHeart} />
-                                                    {tweet.favorite_count}
-                                                </div>
-                                            </Card.Body>
+                                            <FontAwesomeIcon icon={faRetweet} />
+                                            {tweet.retweet_count}
+                                            <FontAwesomeIcon icon={faHeart} />
+                                            {tweet.favorite_count}
                                         </div>
-                                    )
-                                }
+                                    </Card.Body>
+                                </div>
                             </Card>
                         )
                     )

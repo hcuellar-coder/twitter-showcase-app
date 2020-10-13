@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Image, CardDeck, Modal, Button } from 'react-bootstrap';
 import parseResults from '../services/ParseResults';
+import parse from 'html-react-parser';
 
 function RandomTweet() {
     const [search, setSearch] = useState('');
@@ -23,14 +24,16 @@ function RandomTweet() {
     }
 
     async function fetchUserTweet(screen_name) {
+        let tempResult = [];
         console.log('fetchUserTweet');
         await fetch(`api/tweets/users_random?user=${screen_name}`).then(async (results) => {
             await (results.json()).then(async (results) => {
                 console.log('before parse = ', results);
-                await parseResults(results).then((result) => {
+                tempResult.push(results);
+                await parseResults(tempResult).then((result) => {
                     setShowModal(true);
-                    setUserTweet(result[0]);
                     console.log(result);
+                    setUserTweet(result[0][0]);
                 });
             })
         });
@@ -88,7 +91,7 @@ function RandomTweet() {
                         <Image src={userTweet.user.profile_image_url_https} roundedCircle />
                         <Modal.Title>{userTweet.user.name}</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>{userTweet.full_text}</Modal.Body>
+                    <Modal.Body>{parse(userTweet.full_text)}</Modal.Body>
                 </Modal>
             }
         </div>
