@@ -120,17 +120,17 @@ function UserSearch() {
                                         <div>
                                             <Image src={tweet.user.profile_image_url_https} roundedCircle />
                                             <span>{tweet.user.name}</span>
-                                            <span>@{tweet.user.screen_name}</span>
+                                            <span>@{tweet.user.screen_name} - {tweet.timestamp}</span>
                                         </div>
                                     </Card.Title>
                                     <Card.Body>
                                         {parse(tweet.full_text)}
-                                        <div>
+                                        <span>
                                             <FontAwesomeIcon icon={faRetweet} />
                                             {tweet.retweet_count}
                                             <FontAwesomeIcon icon={faHeart} />
                                             {tweet.favorite_count}
-                                        </div>
+                                        </span>
                                     </Card.Body>
                                 </div>
                             </Card>

@@ -19,7 +19,7 @@ export default async function parseResults(results) {
             tweet = tweet.retweeted_status;
         }
         console.log(tweet);
-        convertTime(tweet.created_at);
+        tempTweets[iteration].timestamp = convertTime(tweet.created_at);
         text = tweet.full_text;
         if (tweet.entities && tweet.entities !== null) {
             if (tweet.entities.hashtags && tweet.entities.hashtags !== null) {
@@ -98,10 +98,23 @@ export default async function parseResults(results) {
 
 
 function convertTime(textTime) {
-    let newTime = new Date(textTime);
-    const month = newTime.toLocaleString('default', { month: 'short' });
-    const day = newTime.toLocaleString('default', { day: 'numeric' });
-    console.log(newTime);
-    console.log(month);
-    console.log(day);
+    const tweetTime = new Date(textTime);
+    const difference = new Date() - tweetTime;
+
+    const seconds = (difference / 1000).toFixed(0);
+    const minutes = (difference / (1000 * 60)).toFixed(0);
+    const hours = Math.floor((difference / (1000 * 60 * 60)));
+
+    const month = tweetTime.toLocaleString('default', { month: 'short' });
+    const day = tweetTime.toLocaleString('default', { day: 'numeric' });
+
+    if (seconds < 60) {
+        return seconds + "s";
+    } else if (minutes < 60) {
+        return minutes + "m";
+    } else if (hours < 24) {
+        return hours + "h";
+    } else {
+        return month + " " + day;
+    }
 }
