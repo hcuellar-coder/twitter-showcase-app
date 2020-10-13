@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Image, CardDeck, Modal, Button } from 'react-bootstrap';
+import { Card, Image, CardDeck, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import parseResults from '../services/ParseResults';
 import parse from 'html-react-parser';
 
 function RandomTweet() {
-    const [search, setSearch] = useState('');
     const [userInfo, setUserInfo] = useState([]);
     const [userTweet, setUserTweet] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const users = ['@NASA', '@SpaceX', '@qikipedia', '@PopSci', '@WIREDScience'];
 
     async function fetchUsers(e) {
-        console.log('fetchUsers');
         let tempUsers = [];
         for (let user of users) {
             await fetch(`api/tweets/users?user=${user}`).then(async (results) => {
@@ -45,17 +43,16 @@ function RandomTweet() {
         fetchUsers();
     }, [])
 
-    useEffect(() => {
-        console.log(userInfo);
-    }, [userInfo])
+    // useEffect(() => {
+    //     console.log(userInfo);
+    // }, [userInfo])
 
-    useEffect(() => {
-        console.log(userTweet);
-    }, [userTweet])
+    // useEffect(() => {
+    //     console.log(userTweet);
+    // }, [userTweet])
 
 
     function handleClick(screen_name) {
-        console.log(screen_name);
         fetchUserTweet(screen_name);
     }
 

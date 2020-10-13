@@ -7,9 +7,9 @@ export default async function parseResults(results) {
     if (tempTweets.statuses !== undefined) {
         tempTweets = tempTweets.statuses;
     }
-    console.log('tempTweets = ', tempTweets);
+    // console.log('tempTweets = ', tempTweets);
     for (let tweet of tempTweets) {
-        console.log(tweet);
+        // console.log(tweet);
         last_id = tweet.id_str;
         if (tweet.retweeted_status !== null) {
             let searchedUserName = tweet.user.name;
@@ -19,19 +19,19 @@ export default async function parseResults(results) {
             tweet = tweet.retweeted_status;
         }
         console.log(tweet);
+        convertTime(tweet.created_at);
         text = tweet.full_text;
         if (tweet.entities && tweet.entities !== null) {
             if (tweet.entities.hashtags && tweet.entities.hashtags !== null) {
                 for (let hashtag of tweet.entities.hashtags) {
-                    text = text.replace("#" + `${hashtag.text}`, "<a href=\"https://twitter.com/hashtag/"
-                        + `${hashtag.text}` + "?src=hashtag_click\">#" + `${hashtag.text}` + "</a>");
+                    text = text.replace(`#${hashtag.text}`, `<a href="https://twitter.com/hashtag/
+                        ${hashtag.text}?src=hashtag_click">#${hashtag.text}</a>`);
                     tempTweets[iteration].full_text = text;
                 }
             }
             if (tweet.entities.urls && tweet.entities.urls !== null) {
-                console.log('url!');
                 for (let urls of tweet.entities.urls) {
-                    text = text.replace(`${urls.url}`, "<a href=\"" + `${urls.expanded_url}` + "\">" + `${urls.display_url}` + "</a>");
+                    text = text.replace(`${urls.url}`, `<a href="${urls.expanded_url}">${urls.display_url}</a>`);
                     tempTweets[iteration].full_text = text;
                 }
             }
@@ -39,8 +39,8 @@ export default async function parseResults(results) {
                 for (let user_mentions of tweet.entities.user_mentions) {
                     let screenNameCaseInsensitive = new RegExp(`${user_mentions.screen_name}`, 'ig');
                     text = text.replace(screenNameCaseInsensitive, `${user_mentions.screen_name}`);
-                    text = text.replace("@" + `${user_mentions.screen_name}`, "<a href=\"https://twitter.com/"
-                        + `${user_mentions.screen_name}` + "\">@" + `${user_mentions.screen_name}` + "</a>");
+                    text = text.replace(`@${user_mentions.screen_name}`, `<a href="https://twitter.com/
+                        ${user_mentions.screen_name}">@${user_mentions.screen_name}</a>`);
                     tempTweets[iteration].full_text = text;
                 }
             }
@@ -57,8 +57,8 @@ export default async function parseResults(results) {
                         case 'photo':
                             url = (media.media_url_https).slice(0, -4);
                             format = (media.media_url_https).slice(-3);
-                            text = text.replace(`${media.url}`, "<div class=\"media_photo\"><Image src=\"" + `${url}`
-                                + "?format=" + `${format}` + "&name=small\" fluid/></div>");
+                            text = text.replace(`${media.url}`, `<div class="media_photo"><Image 
+                                src="${url}?format=${format}&name=small" fluid/></div>`);
                             tempTweets[iteration].full_text = text;
                             break;
                         case 'video':
@@ -74,17 +74,15 @@ export default async function parseResults(results) {
                             }
                             url = (media.media_url_https).slice(0, -4);
                             format = (media.media_url_https).slice(-3);
-                            text = text.replace(`${media.url}`, "<div><video width=\"" + `${width}` + "\" height=\"" + `${height}`
-                                + "\" preload=\"none\" playsinline controls poster=\"" + `${url}` + "?format=" + `${format}` +
-                                "&name=small\"><source src=\"" + `${video}` + "\" type=\"" + `${videoContentType}`
-                                + "\"></video></div>");
+                            text = text.replace(`${media.url}`, `<div><video width="${width}" height="${height}"
+                                preload="none" playsinline controls poster="${url}?format=${format}&name=small">
+                                <source src="${video}" type="${videoContentType}"></video></div>`);
                             tempTweets[iteration].full_text = text;
                             break;
                         case 'animated_gif':
-                            text = text.replace(`${media.url}`, "<div><video autoplay loop muted width=\"" + `${width}` + "\" height=\"" + `${height}`
-                                + "\" preload=\"auto\" playsinline poster=\"" + `${media.media_url_https}` + "\" src=\""
-                                + `${media.video_info.variants[0].url}` + "\" type=\"" + `${media.video_info.variants[0].content_type}`
-                                + "autoplay\"></video></div>");
+                            text = text.replace(`${media.url}`, `<div><video autoplay loop muted width="${width}" height="${height}"
+                                preload="auto" playsinline poster="${media.media_url_https}" src="${media.video_info.variants[0].url}"
+                                type="${media.video_info.variants[0].content_type}" autoplay></video></div>`);
                             tempTweets[iteration].full_text = text;
                             break;
                         default:
@@ -96,4 +94,14 @@ export default async function parseResults(results) {
         iteration++;
     }
     return [tempTweets, last_id];
+}
+
+
+function convertTime(textTime) {
+    let newTime = new Date(textTime);
+    const month = newTime.toLocaleString('default', { month: 'short' });
+    const day = newTime.toLocaleString('default', { day: 'numeric' });
+    console.log(newTime);
+    console.log(month);
+    console.log(day);
 }
