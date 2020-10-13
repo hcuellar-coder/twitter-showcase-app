@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Image, CardDeck, Modal, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import parseResults from '../services/ParseResults';
 import parse from 'html-react-parser';
 
@@ -90,6 +92,10 @@ function RandomTweet() {
                     <Modal.Header closeButton>
                         <Image src={userTweet.user.profile_image_url_https} roundedCircle />
                         <Modal.Title>{userTweet.user.name}</Modal.Title>
+                        {userTweet.retweet === undefined
+                            ? <div></div>
+                            : <span><FontAwesomeIcon icon={faRetweet} />{userTweet.searchedUserName} Retweeted</span>
+                        }
                     </Modal.Header>
                     <Modal.Body>{parse(userTweet.full_text)}</Modal.Body>
                 </Modal>
