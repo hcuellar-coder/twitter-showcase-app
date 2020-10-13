@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Button, Card, Image } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRetweet } from '@fortawesome/free-solid-svg-icons';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { Form, Button } from 'react-bootstrap';
 import parseResults from '../services/ParseResults';
-import parse from 'html-react-parser';
+import Tweets from './Tweets';
+
 
 function UserSearch() {
     const [search, setSearch] = useState('');
@@ -89,7 +87,6 @@ function UserSearch() {
         console.log('Fetch more list items!');
     }
 
-
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
@@ -103,43 +100,6 @@ function UserSearch() {
         userSearchBool ? fetchCursorUserTweets() : fetchCursorContentTweets()
     }, [isFetching])
 
-    const Tweets = () => (
-        <div>
-            {userTweets.length === 0
-                ? <div></div>
-                : userTweets.map
-                    ((tweet, index) =>
-                        (
-                            <Card key={index}>
-                                <div>
-                                    <Card.Title>
-                                        {tweet.retweet === undefined
-                                            ? <div></div>
-                                            : <span><FontAwesomeIcon icon={faRetweet} />{tweet.searchedUserName} Retweeted</span>
-                                        }
-                                        <div>
-                                            <Image src={tweet.user.profile_image_url_https} roundedCircle />
-                                            <span>{tweet.user.name}</span>
-                                            <span>@{tweet.user.screen_name} - {tweet.timestamp}</span>
-                                        </div>
-                                    </Card.Title>
-                                    <Card.Body>
-                                        {parse(tweet.full_text)}
-                                        <span>
-                                            <FontAwesomeIcon icon={faRetweet} />
-                                            {tweet.retweet_count}
-                                            <FontAwesomeIcon icon={faHeart} />
-                                            {tweet.favorite_count}
-                                        </span>
-                                    </Card.Body>
-                                </div>
-                            </Card>
-                        )
-                    )
-            }
-        </div>
-    )
-
     return (
         <div>
             <h2>Lets search for a twitter user or content</h2>
@@ -148,7 +108,7 @@ function UserSearch() {
                 <Button variant="outline-success" onClick={fetchUserTweets}>Search User</Button>
                 <Button variant="outline-success" onClick={fetchContentTweets}>Search Content</Button>
             </div>
-            <Tweets />
+            <Tweets userTweets={userTweets} />
         </div>
     )
 }
