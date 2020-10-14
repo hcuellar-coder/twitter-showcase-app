@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import parseResults from '../services/ParseResults';
 import Tweets from './Tweets';
-import './UserSearch.css';
+import './Search.css';
 
 
-function UserSearch() {
+function Search() {
     const [search, setSearch] = useState('');
     const [userTweets, setUserTweets] = useState([]);
     const [lastId, setLastId] = useState('');
@@ -103,7 +103,7 @@ function UserSearch() {
 
     return (
         <div>
-            <h2 id="user-search-h2">Search for a Twitter User or Content</h2>
+            <h2 id="user-search-h2">Search for User or Content Tweets</h2>
             <div id="search-bar-div">
                 <Form.Control id="searchBar" type="text" placeholder="Search" onChange={handleOnChange} value={search} />
                 <Button variant="primary" onClick={fetchUserTweets}>User</Button>
@@ -114,4 +114,4 @@ function UserSearch() {
     )
 }
 
-export default UserSearch;
+export default Search;

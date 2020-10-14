@@ -1,6 +1,6 @@
 import React from 'react';
 import Home from './components/Home';
-import UserSearch from './components/UserSearch';
+import Search from './components/Search';
 import RandomTweet from './components/RandomTweet';
 import { Route } from 'react-router';
 import './App.css';
@@ -11,7 +11,7 @@ function App() {
     <div>
       <Layout>
         <Route exact path='/' component={Home} />
-        <Route path='/user-search' component={UserSearch} />
+        <Route path='/search' component={Search} />
         <Route path='/random-tweet' component={RandomTweet} />
       </Layout>
     </div>

@@ -17,6 +17,19 @@ button {
 
 #user-search-h2 {
     display: flex;
+    text-align: center;
     justify-content: center;
 }
+
+@media screen and (min-width: 601px) {
+    #user-search-h2 {
+      font-size: 3vw;
+    }
+  }
+  
+  @media screen and (max-width: 600px) {
+    #user-search-h2 {
+      font-size: 6vw;
+    }
+  }
 
