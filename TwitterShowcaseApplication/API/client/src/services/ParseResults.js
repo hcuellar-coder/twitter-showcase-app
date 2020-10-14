@@ -57,8 +57,8 @@ export default async function parseResults(results) {
                         case 'photo':
                             url = (media.media_url_https).slice(0, -4);
                             format = (media.media_url_https).slice(-3);
-                            text = text.replace(`${media.url}`, `<div class="media_photo"><Image 
-                                src="${url}?format=${format}&name=small" fluid/></div>`);
+                            text = text.replace(`${media.url}`, `<div class="media_photo_div"><Image 
+                               class="media_photo" src="${url}?format=${format}&name=small" fluid/></div>`);
                             tempTweets[iteration].full_text = text;
                             break;
                         case 'video':
@@ -74,14 +74,14 @@ export default async function parseResults(results) {
                             }
                             url = (media.media_url_https).slice(0, -4);
                             format = (media.media_url_https).slice(-3);
-                            text = text.replace(`${media.url}`, `<div><video width="${width}" height="${height}"
+                            text = text.replace(`${media.url}`, `<div class="media_video_div"><video class="media_video" 
                                 preload="none" playsinline controls poster="${url}?format=${format}&name=small">
                                 <source src="${video}" type="${videoContentType}"></video></div>`);
                             tempTweets[iteration].full_text = text;
                             break;
                         case 'animated_gif':
-                            text = text.replace(`${media.url}`, `<div><video autoplay loop muted width="${width}" height="${height}"
-                                preload="auto" playsinline poster="${media.media_url_https}" src="${media.video_info.variants[0].url}"
+                            text = text.replace(`${media.url}`, `<div class="media_gif_div"><video class="media_gif" autoplay loop 
+                                muted preload="auto" playsinline poster="${media.media_url_https}" src="${media.video_info.variants[0].url}"
                                 type="${media.video_info.variants[0].content_type}" autoplay></video></div>`);
                             tempTweets[iteration].full_text = text;
                             break;

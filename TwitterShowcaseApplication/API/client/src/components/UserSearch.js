@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import parseResults from '../services/ParseResults';
 import Tweets from './Tweets';
+import './UserSearch.css';
 
 
 function UserSearch() {
@@ -102,11 +103,11 @@ function UserSearch() {
 
     return (
         <div>
-            <h2>Lets search for a twitter user or content</h2>
+            <h2 id="user-search-h2">Search for a Twitter User or Content</h2>
             <div id="search-bar-div">
-                <Form.Control type="text" placeholder="Search" className="mr-sm-2" onChange={handleOnChange} value={search} />
-                <Button variant="outline-success" onClick={fetchUserTweets}>Search User</Button>
-                <Button variant="outline-success" onClick={fetchContentTweets}>Search Content</Button>
+                <Form.Control id="searchBar" type="text" placeholder="Search" onChange={handleOnChange} value={search} />
+                <Button variant="primary" onClick={fetchUserTweets}>Search User</Button>
+                <Button variant="success" onClick={fetchContentTweets}>Search Content</Button>
             </div>
             <Tweets userTweets={userTweets} />
         </div>

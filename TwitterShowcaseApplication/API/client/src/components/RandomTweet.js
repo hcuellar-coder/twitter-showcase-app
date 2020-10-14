@@ -62,22 +62,25 @@ function RandomTweet() {
         <div>
             {userInfo.length === 0
                 ? <div></div>
-                : <CardDeck>
-                    {userInfo.map(
-                        (user, index) =>
-                            <Card key={index} onClick={() => { handleClick(user.screen_name) }}>
-                                <Card.Img variant="top" src={user.profile_banner_url} />
-                                <Card.Body>
-                                    <Card.Title>
-                                        <Card.ImgOverlay><Image src={user.profile_image_url_https} roundedCircle /></Card.ImgOverlay>
-                                        {user.name}
-                                    </Card.Title>
-                                    <Card.Subtitle>@{user.screen_name}</Card.Subtitle>
-                                </Card.Body>
-                            </Card>
-                    )
-                    }
-                </CardDeck>
+                : <div>
+                    <CardDeck>
+                        {userInfo.map(
+                            (user, index) =>
+                                <Card key={index} onClick={() => { handleClick(user.screen_name) }}>
+                                    <Card.Img variant="top" src={user.profile_banner_url} />
+                                    <Card.Body>
+                                        <Card.Title>
+                                            <Card.ImgOverlay><Image src={user.profile_image_url_https} roundedCircle /></Card.ImgOverlay>
+                                            {user.name}
+                                        </Card.Title>
+                                        <Card.Subtitle>@{user.screen_name}</Card.Subtitle>
+                                    </Card.Body>
+                                </Card>
+
+                        )
+                        }
+                    </CardDeck>
+                </div>
             }
             {userTweet.length === 0
                 ? <div></div> :

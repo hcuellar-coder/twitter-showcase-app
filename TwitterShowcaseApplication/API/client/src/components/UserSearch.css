@@ -1,0 +1,22 @@
+button {
+    font-size: small;
+    margin-right: 5px;
+}
+
+#search-bar-div{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+#searchBar {
+    width: 100%;
+    max-width: 500px;
+    margin-right: 5px;
+}
+
+#user-search-h2 {
+    display: flex;
+    justify-content: center;
+}
+
