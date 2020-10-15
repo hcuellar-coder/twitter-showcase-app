@@ -1,3 +1,7 @@
+.container-fluid {
+    max-width: 800px;
+}
+
 .media_photo_div {
     display: flex;
     justify-content: center;
@@ -6,6 +10,7 @@
 .media_photo {
    max-width: 100%;
    max-height: 100%;
+   border-radius: 25px;
 }
 
 .media_video_div {
@@ -16,6 +21,7 @@
 .media_video {
     max-width: 100%;
     max-height: 100%;
+    border-radius: 25px;
 }
 
 .media_gif_div {
@@ -26,6 +32,7 @@
 .media_gif{
     max-width: 100%;
     max-height: 100%;
+    border-radius: 25px;
 }
 
 .card-title {
@@ -51,7 +58,12 @@
 
 .username-span {
     font-size: 16px;
-    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.screen-name-div{
+    margin-top: -20px;
+    margin-left: 50px;
 }
 
 .screen-name-span {
@@ -61,7 +73,7 @@
 .retweet-likes-span {
     font-size: 16px;
     float: right;
-    margin-top: 13px;
+    margin-top: -40px;
 }
 
 .retweet-count-span {

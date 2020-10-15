@@ -7,9 +7,7 @@ export default async function parseResults(results) {
     if (tempTweets.statuses !== undefined) {
         tempTweets = tempTweets.statuses;
     }
-    // console.log('tempTweets = ', tempTweets);
     for (let tweet of tempTweets) {
-        // console.log(tweet);
         last_id = tweet.id_str;
         if (tweet.retweeted_status !== null) {
             let searchedUserName = tweet.user.name;
@@ -51,15 +49,17 @@ export default async function parseResults(results) {
                     let format = '';
                     let video = '';
                     let videoContentType = '';
-                    let height = 383;
-                    let width = 680;
+                    let mediaText = '';
+                    let onClick = `onClick={() => { handleClick(tweet.extended_entities !== null ? tweet.extended_entities.media : null) }}`;
                     switch (media.type) {
                         case 'photo':
                             url = (media.media_url_https).slice(0, -4);
                             format = (media.media_url_https).slice(-3);
-                            text = text.replace(`${media.url}`, `<div class="media_photo_div"><Image 
-                               class="media_photo" src="${url}?format=${format}&name=small" fluid/></div>`);
+                            text = text.replace(`${media.url}`, '');
                             tempTweets[iteration].full_text = text;
+                            mediaText = `<div class="media_photo_div"><Image class="media_photo" 
+                                            src="${url}?format=${format}&name=small" fluid/></div>`;
+                            tempTweets[iteration].media_text = mediaText;
                             break;
                         case 'video':
                             for (let variant of media.video_info.variants) {
@@ -74,16 +74,21 @@ export default async function parseResults(results) {
                             }
                             url = (media.media_url_https).slice(0, -4);
                             format = (media.media_url_https).slice(-3);
-                            text = text.replace(`${media.url}`, `<div class="media_video_div"><video class="media_video" 
-                                preload="none" playsinline controls poster="${url}?format=${format}&name=small">
-                                <source src="${video}" type="${videoContentType}"></video></div>`);
+                            text = text.replace(`${media.url}`, '');
                             tempTweets[iteration].full_text = text;
+                            mediaText = `<div class="media_video_div"><video class="media_video" 
+                                            preload="none" playsinline controls poster="${url}?format=${format}&name=small">
+                                            <source src="${video}" type="${videoContentType}"></video></div>`;
+                            tempTweets[iteration].media_text = mediaText;
                             break;
                         case 'animated_gif':
-                            text = text.replace(`${media.url}`, `<div class="media_gif_div"><video class="media_gif" autoplay loop 
-                                muted preload="auto" playsinline poster="${media.media_url_https}" src="${media.video_info.variants[0].url}"
-                                type="${media.video_info.variants[0].content_type}" autoplay></video></div>`);
+                            text = text.replace(`${media.url}`, '');
                             tempTweets[iteration].full_text = text;
+                            mediaText = `<div class="media_gif_div"><video class="media_gif" autoplay loop 
+                                            muted preload="auto" playsinline poster="${media.media_url_https}" 
+                                            src="${media.video_info.variants[0].url}" type="${media.video_info.variants[0].content_type}"
+                                            autoplay ></video></div>`;
+                            tempTweets[iteration].media_text = mediaText;
                             break;
                         default:
                             break;

@@ -56,7 +56,9 @@ function RandomTweet() {
         fetchUserTweet(screen_name);
     }
 
-    const handleClose = () => setShowModal(false);
+    function handleClose() {
+        setShowModal(false);
+    }
 
     return (
         <div>
