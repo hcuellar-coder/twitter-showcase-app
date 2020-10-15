@@ -16,7 +16,6 @@ export default async function parseResults(results) {
             tempTweets[iteration].searchedUserName = searchedUserName;
             tweet = tweet.retweeted_status;
         }
-        console.log(tweet);
         tempTweets[iteration].timestamp = convertTime(tweet.created_at);
         text = tweet.full_text;
         if (tweet.entities && tweet.entities !== null) {
@@ -50,7 +49,6 @@ export default async function parseResults(results) {
                     let video = '';
                     let videoContentType = '';
                     let mediaText = '';
-                    let onClick = `onClick={() => { handleClick(tweet.extended_entities !== null ? tweet.extended_entities.media : null) }}`;
                     switch (media.type) {
                         case 'photo':
                             url = (media.media_url_https).slice(0, -4);

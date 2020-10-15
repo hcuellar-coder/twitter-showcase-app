@@ -14,14 +14,11 @@ function Search() {
 
     async function fetchUserTweets(e) {
         setUserSearchBool(true);
-        console.log('fetchUserTweets');
         let searchInput = search;
         searchInput = searchInput.split(" ").join('');
         await fetch(`api/tweets/timeline?user=${searchInput}`).then(async (results) => {
             await (results.json()).then(async (results) => {
-                console.log('before parse = ', results);
                 await parseResults(results).then((results) => {
-                    console.log(results);
                     setUserTweets(results[0]);
                     setLastId(results[1]);
                 });
@@ -30,13 +27,11 @@ function Search() {
     }
 
     async function fetchCursorUserTweets(e) {
-        console.log('fetchCursorUserTweets');
         setIsFetching(false);
         let searchInput = search;
         searchInput = searchInput.split(" ").join('');
         await fetch(`api/tweets/cursor_timeline?user=${searchInput}&lastId=${lastId}`).then(async (results) => {
             await (results.json()).then(async (results) => {
-                console.log('before parse = ', results);
                 await parseResults(results).then((results) => {
                     const newList = [...userTweets, ...results[0]];
                     setUserTweets(newList);
@@ -48,7 +43,6 @@ function Search() {
 
     async function fetchContentTweets(e) {
         setUserSearchBool(false);
-        console.log('fetchContentTweets');
         let searchInput = search;
         await fetch(`api/tweets/search?content=${searchInput}`).then(async (results) => {
             await (results.json()).then(async (results) => {
@@ -61,14 +55,11 @@ function Search() {
     }
 
     async function fetchCursorContentTweets(e) {
-        console.log('fetchCursorContentTweets');
         setIsFetching(false);
         let searchInput = search;
         await fetch(`api/tweets/cursor_search?content=${searchInput}&lastId=${lastId}`).then(async (results) => {
             await (results.json()).then(async (results) => {
-                console.log('before parse = ', results);
                 await parseResults(results).then((results) => {
-                    console.log('after parse = ', results);
                     const newList = [...userTweets, ...results[0]];
                     setUserTweets(newList);
                     setLastId(results[1]);
@@ -85,7 +76,6 @@ function Search() {
     function handleScroll() {
         if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
         setIsFetching(true);
-        console.log('Fetch more list items!');
     }
 
     useEffect(() => {
@@ -97,7 +87,6 @@ function Search() {
 
     useEffect(() => {
         if (!isFetching) return;
-        console.log('userSearchBool = ', userSearchBool);
         userSearchBool ? fetchCursorUserTweets() : fetchCursorContentTweets()
     }, [isFetching])
 
@@ -105,7 +94,7 @@ function Search() {
         <div>
             <h2 id="user-search-h2">Search for User or Content Tweets</h2>
             <div id="search-bar-div">
-                <Form.Control id="searchBar" type="text" placeholder="Search" onChange={handleOnChange} value={search} />
+                <Form.Control id="searchBar" type="text" placeholder="Search" onChange={handleOnChange} value={search} autoComplete="off" />
                 <div id="buttons-div">
                     <Button className="button" variant="primary" onClick={fetchUserTweets}>User</Button>
                     <Button className="button" variant="success" onClick={fetchContentTweets}>Content</Button>

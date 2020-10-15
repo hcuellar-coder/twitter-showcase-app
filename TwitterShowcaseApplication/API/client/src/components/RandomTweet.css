@@ -1,0 +1,41 @@
+.card{
+    display: flex;
+    justify-content: center;
+    border: 3px solid rgba(0,0,0,.125);
+    border-radius: 55px;
+    margin-bottom: 10px;
+    
+}
+
+.random-card-img {
+    max-width: 100%;
+   max-height: 100%;
+    border-radius: 55px;
+}
+
+.modal-header {
+    display: block;
+    padding-bottom: 5px;
+}
+
+.modal-title {
+    margin-top: 5px;
+}
+
+.random-username-span {
+    margin-left: 5px;
+}
+
+.random-retweet-likes-div {
+    float: right;
+    margin-top: -6%;
+    font-size: 24px;
+}
+
+.random-retweet-count-span {
+    margin-right: 10px;
+}
+
+.modal-media-div {
+    margin-top: 10px;
+}

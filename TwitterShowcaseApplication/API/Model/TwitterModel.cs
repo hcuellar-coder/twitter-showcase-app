@@ -152,9 +152,9 @@ namespace API.Model
         public async Task<object> GetUsersRandom(string user)
         {
             var rand = new Random();
-            int num = rand.Next(0, 200);
+            int num = rand.Next(0, 25);
             var request = new HttpRequestMessage(HttpMethod.Get,
-                "statuses/user_timeline.json?count=200&tweet_mode=extended&screen_name=" + user);
+                "statuses/user_timeline.json?count=25&tweet_mode=extended&screen_name=" + user);
             var client = _clientFactory.CreateClient("twitter");
             var response = await client.SendAsync(request);
 

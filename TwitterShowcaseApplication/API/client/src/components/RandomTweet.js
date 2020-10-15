@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Image, CardDeck, Modal } from 'react-bootstrap';
+import { Card, Image, Modal, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRetweet } from '@fortawesome/free-solid-svg-icons';
+import { faRetweet, faHeart } from '@fortawesome/free-solid-svg-icons';
 import parseResults from '../services/ParseResults';
 import parse from 'html-react-parser';
+import './RandomTweet.css';
 
 function RandomTweet() {
     const [userInfo, setUserInfo] = useState([]);
@@ -25,14 +26,11 @@ function RandomTweet() {
 
     async function fetchUserTweet(screen_name) {
         let tempResult = [];
-        console.log('fetchUserTweet');
         await fetch(`api/tweets/users_random?user=${screen_name}`).then(async (results) => {
             await (results.json()).then(async (results) => {
-                console.log('before parse = ', results);
                 tempResult.push(results);
                 await parseResults(tempResult).then((result) => {
                     setShowModal(true);
-                    console.log(result);
                     setUserTweet(result[0][0]);
                 });
             })
@@ -42,15 +40,6 @@ function RandomTweet() {
     useEffect(() => {
         fetchUsers();
     }, [])
-
-    // useEffect(() => {
-    //     console.log(userInfo);
-    // }, [userInfo])
-
-    // useEffect(() => {
-    //     console.log(userTweet);
-    // }, [userTweet])
-
 
     function handleClick(screen_name) {
         fetchUserTweet(screen_name);
@@ -65,11 +54,11 @@ function RandomTweet() {
             {userInfo.length === 0
                 ? <div></div>
                 : <div>
-                    <CardDeck>
+                    <Container fluid>
                         {userInfo.map(
                             (user, index) =>
                                 <Card key={index} onClick={() => { handleClick(user.screen_name) }}>
-                                    <Card.Img variant="top" src={user.profile_banner_url} />
+                                    <Card.Img className="random-card-img" variant="top" src={user.profile_banner_url} />
                                     <Card.Body>
                                         <Card.Title>
                                             <Card.ImgOverlay><Image src={user.profile_image_url_https} roundedCircle /></Card.ImgOverlay>
@@ -81,7 +70,7 @@ function RandomTweet() {
 
                         )
                         }
-                    </CardDeck>
+                    </Container>
                 </div>
             }
             {userTweet.length === 0
@@ -91,15 +80,41 @@ function RandomTweet() {
                     size="lg"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered>
-                    <Modal.Header closeButton>
-                        <Image src={userTweet.user.profile_image_url_https} roundedCircle />
-                        <Modal.Title>{userTweet.user.name}</Modal.Title>
-                        {userTweet.retweet === undefined
-                            ? <div></div>
-                            : <span><FontAwesomeIcon icon={faRetweet} />{userTweet.searchedUserName} Retweeted</span>
-                        }
+                    <Modal.Header>
+                        <div>
+                            {userTweet.retweet === undefined
+                                ? <div></div>
+                                : <span><FontAwesomeIcon icon={faRetweet} />{userTweet.searchedUserName} Retweeted</span>
+                            }
+                        </div>
+                        <div>
+                            <Modal.Title>
+                                <Image src={userTweet.user.profile_image_url_https} roundedCircle />
+                                <span className="random-username-span">{userTweet.user.name}</span>
+                            </Modal.Title>
+                            <div className="random-retweet-likes-div">
+                                <span className="random-retweet-count-span">
+                                    <FontAwesomeIcon icon={faRetweet} />
+                                    {userTweet.retweet_count}
+                                </span>
+                                <span className="random-likes-count-span">
+                                    <FontAwesomeIcon icon={faHeart} />
+                                    {userTweet.favorite_count}
+                                </span>
+                            </div>
+                        </div>
                     </Modal.Header>
-                    <Modal.Body>{parse(userTweet.full_text)}</Modal.Body>
+                    <Modal.Body>
+                        {parse(userTweet.full_text)}
+                        {userTweet.media_text === undefined
+                            ? <div></div>
+                            : (
+                                <div className="modal-media-div">
+                                    {parse(userTweet.media_text)}
+                                </div>
+                            )
+                        }
+                    </Modal.Body>
                 </Modal>
             }
         </div>

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import parseModal from '../services/ParseModal';
-import parse, { domtoReact } from 'html-react-parser';
+import parse from 'html-react-parser';
 import './Tweet.css';
 
 function Tweets(props) {
@@ -35,7 +35,9 @@ function Tweets(props) {
                                     <Card.Title>
                                         {tweet.retweet === undefined
                                             ? <div></div>
-                                            : <span className="retweeted-span"><FontAwesomeIcon icon={faRetweet} />{tweet.searchedUserName} Retweeted</span>
+                                            : <span className="retweeted-span">
+                                                <FontAwesomeIcon icon={faRetweet} />{tweet.searchedUserName} Retweeted
+                                              </span>
                                         }
                                         <div className="tweet-title-div">
                                             <Image className="user-image-round" src={tweet.user.profile_image_url_https} roundedCircle />
