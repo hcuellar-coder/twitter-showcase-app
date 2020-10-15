@@ -54,9 +54,7 @@ function Tweets(props) {
 
 export default Tweets;
 
-
-
-/*className="card-body"
+/* className="card-body
 
 return (
         <div>
