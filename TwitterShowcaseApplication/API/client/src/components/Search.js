@@ -106,8 +106,10 @@ function Search() {
             <h2 id="user-search-h2">Search for User or Content Tweets</h2>
             <div id="search-bar-div">
                 <Form.Control id="searchBar" type="text" placeholder="Search" onChange={handleOnChange} value={search} />
-                <Button variant="primary" onClick={fetchUserTweets}>User</Button>
-                <Button variant="success" onClick={fetchContentTweets}>Content</Button>
+                <div id="buttons-div">
+                    <Button className="button" variant="primary" onClick={fetchUserTweets}>User</Button>
+                    <Button className="button" variant="success" onClick={fetchContentTweets}>Content</Button>
+                </div>
             </div>
             <Tweets userTweets={userTweets} />
         </div>
