@@ -21,8 +21,8 @@ export default async function parseResults(results) {
         if (tweet.entities && tweet.entities !== null) {
             if (tweet.entities.hashtags && tweet.entities.hashtags !== null) {
                 for (let hashtag of tweet.entities.hashtags) {
-                    text = text.replace(`#${hashtag.text}`, `<a href="https://twitter.com/hashtag/
-                        ${hashtag.text}?src=hashtag_click">#${hashtag.text}</a>`);
+                    text = text.replace(`#${hashtag.text}`,
+                        `<a href="https://twitter.com/hashtag/${hashtag.text}?src=hashtag_click">#${hashtag.text}</a>`);
                     tempTweets[iteration].full_text = text;
                 }
             }
@@ -36,8 +36,8 @@ export default async function parseResults(results) {
                 for (let user_mentions of tweet.entities.user_mentions) {
                     let screenNameCaseInsensitive = new RegExp(`${user_mentions.screen_name}`, 'ig');
                     text = text.replace(screenNameCaseInsensitive, `${user_mentions.screen_name}`);
-                    text = text.replace(`@${user_mentions.screen_name}`, `<a href="https://twitter.com/
-                        ${user_mentions.screen_name}">@${user_mentions.screen_name}</a>`);
+                    text = text.replace(`@${user_mentions.screen_name}`,
+                        `<a href="https://twitter.com/${user_mentions.screen_name}">@${user_mentions.screen_name}</a>`);
                     tempTweets[iteration].full_text = text;
                 }
             }

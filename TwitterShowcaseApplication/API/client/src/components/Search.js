@@ -9,16 +9,13 @@ function Search() {
     const [searchType, setSearchType] = useState('');
     const [fetchedTweets, setFetchedTweets] = useState([]);
     const [lastId, setLastId] = useState('');
-    const [userSearchBool, setUserSearchBool] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
 
     async function fetchUserTweets(e) {
         if (search !== '') {
             setSearchType('user');
-            // setUserSearchBool(true);
             let searchInput = search;
             localStorage.setItem('searchInput', searchInput);
-            // localStorage.setItem('userSearchBool', true);
             localStorage.setItem('searchType', 'user');
             searchInput = searchInput.split(" ").join('');
             await fetch(`api/tweets/timeline?user=${searchInput}`).then(async (results) => {
@@ -52,10 +49,8 @@ function Search() {
     async function fetchContentTweets(e) {
         if (search !== '') {
             setSearchType('content');
-            // setUserSearchBool(false);
             let searchInput = search;
             localStorage.setItem('searchInput', searchInput);
-            // localStorage.setItem('userSearchBool', false);
             localStorage.setItem('searchType', 'content');
             await fetch(`api/tweets/search?content=${searchInput}`).then(async (results) => {
                 await (results.json()).then(async (results) => {
@@ -99,7 +94,6 @@ function Search() {
             setSearch(localStorage.getItem('searchInput'));
             setFetchedTweets(JSON.parse(localStorage.getItem('searchResults')));
             setLastId(localStorage.getItem('lastId'));
-            // setUserSearchBool(localStorage.getItem('userSearchBool'));
             setSearchType(localStorage.getItem('searchType'));
         }
     }
