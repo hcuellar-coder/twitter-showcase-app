@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import parseResults from '../services/ParseResults';
 import Tweets from './Tweets';
-// import './Search.css';
 
 
 function Search() {
@@ -13,17 +12,19 @@ function Search() {
     const [isFetching, setIsFetching] = useState(false);
 
     async function fetchUserTweets(e) {
-        setUserSearchBool(true);
-        let searchInput = search;
-        searchInput = searchInput.split(" ").join('');
-        await fetch(`api/tweets/timeline?user=${searchInput}`).then(async (results) => {
-            await (results.json()).then(async (results) => {
-                await parseResults(results).then((results) => {
-                    setUserTweets(results[0]);
-                    setLastId(results[1]);
-                });
-            })
-        });
+        if (search !== '') {
+            setUserSearchBool(true);
+            let searchInput = search;
+            searchInput = searchInput.split(" ").join('');
+            await fetch(`api/tweets/timeline?user=${searchInput}`).then(async (results) => {
+                await (results.json()).then(async (results) => {
+                    await parseResults(results).then((results) => {
+                        setUserTweets(results[0]);
+                        setLastId(results[1]);
+                    });
+                })
+            });
+        }
     }
 
     async function fetchCursorUserTweets(e) {
@@ -42,16 +43,18 @@ function Search() {
     }
 
     async function fetchContentTweets(e) {
-        setUserSearchBool(false);
-        let searchInput = search;
-        await fetch(`api/tweets/search?content=${searchInput}`).then(async (results) => {
-            await (results.json()).then(async (results) => {
-                await parseResults(results).then((results) => {
-                    setUserTweets(results[0]);
-                    setLastId(results[1]);
-                });
-            })
-        });
+        if (search !== '') {
+            setUserSearchBool(false);
+            let searchInput = search;
+            await fetch(`api/tweets/search?content=${searchInput}`).then(async (results) => {
+                await (results.json()).then(async (results) => {
+                    await parseResults(results).then((results) => {
+                        setUserTweets(results[0]);
+                        setLastId(results[1]);
+                    });
+                })
+            });
+        }
     }
 
     async function fetchCursorContentTweets(e) {
