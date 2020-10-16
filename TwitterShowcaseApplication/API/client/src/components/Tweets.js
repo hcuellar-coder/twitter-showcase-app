@@ -5,7 +5,6 @@ import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import parseModal from '../services/ParseModal';
 import parse from 'html-react-parser';
-// import './Tweet.css';
 
 function Tweets(props) {
     const [showModal, setShowModal] = useState(false);
@@ -25,10 +24,10 @@ function Tweets(props) {
 
     return (
         <div>
-            {props.userTweets.length === 0
+            {props.fetchedTweets === undefined
                 ? <div></div>
                 : <Container fluid>
-                    {props.userTweets.map
+                    {props.fetchedTweets.map
                         ((tweet, index) =>
                             (
                                 <Card key={index} >
@@ -74,7 +73,7 @@ function Tweets(props) {
                     }
                 </Container>
             }
-            {props.userTweets.length === 0
+            {props.fetchedTweets === undefined
                 ? <div></div> :
                 <Modal show={showModal}
                     onHide={handleClose}
