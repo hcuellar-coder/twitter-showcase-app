@@ -6,6 +6,7 @@ import Tweets from './Tweets';
 
 function Search() {
     const [search, setSearch] = useState('');
+    const [searchType, setSearchType] = useState('');
     const [fetchedTweets, setFetchedTweets] = useState([]);
     const [lastId, setLastId] = useState('');
     const [userSearchBool, setUserSearchBool] = useState(false);
@@ -13,10 +14,12 @@ function Search() {
 
     async function fetchUserTweets(e) {
         if (search !== '') {
-            setUserSearchBool(true);
+            setSearchType('user');
+            // setUserSearchBool(true);
             let searchInput = search;
             localStorage.setItem('searchInput', searchInput);
-            localStorage.setItem('UserSearchBool', true);
+            // localStorage.setItem('userSearchBool', true);
+            localStorage.setItem('searchType', 'user');
             searchInput = searchInput.split(" ").join('');
             await fetch(`api/tweets/timeline?user=${searchInput}`).then(async (results) => {
                 await (results.json()).then(async (results) => {
@@ -48,10 +51,12 @@ function Search() {
 
     async function fetchContentTweets(e) {
         if (search !== '') {
-            setUserSearchBool(false);
+            setSearchType('content');
+            // setUserSearchBool(false);
             let searchInput = search;
             localStorage.setItem('searchInput', searchInput);
-            localStorage.setItem('UserSearchBool', false);
+            // localStorage.setItem('userSearchBool', false);
+            localStorage.setItem('searchType', 'content');
             await fetch(`api/tweets/search?content=${searchInput}`).then(async (results) => {
                 await (results.json()).then(async (results) => {
                     await parseResults(results).then((results) => {
@@ -94,7 +99,8 @@ function Search() {
             setSearch(localStorage.getItem('searchInput'));
             setFetchedTweets(JSON.parse(localStorage.getItem('searchResults')));
             setLastId(localStorage.getItem('lastId'));
-            setUserSearchBool(localStorage.getItem('UserSearchBool'));
+            // setUserSearchBool(localStorage.getItem('userSearchBool'));
+            setSearchType(localStorage.getItem('searchType'));
         }
     }
 
@@ -108,7 +114,7 @@ function Search() {
 
     useEffect(() => {
         if (!isFetching) return;
-        userSearchBool ? fetchCursorUserTweets() : fetchCursorContentTweets()
+        searchType === 'user' ? fetchCursorUserTweets() : fetchCursorContentTweets()
     }, [isFetching])
 
     return (
@@ -117,8 +123,8 @@ function Search() {
             <div id="search-bar-div">
                 <Form.Control id="searchBar" type="text" placeholder="Search" onChange={handleOnChange} value={search} autoComplete="off" />
                 <div id="buttons-div">
-                    <Button className="button" variant="secondary" onClick={fetchUserTweets}>User</Button>
-                    <Button className="button" variant="secondary" onClick={fetchContentTweets}>Content</Button>
+                    <Button className="button" active={searchType === 'user' ? true : false} variant="secondary" onClick={fetchUserTweets}>User</Button>
+                    <Button className="button" active={searchType === 'content' ? true : false} variant="secondary" onClick={fetchContentTweets}>Content</Button>
                 </div>
             </div>
             <Tweets fetchedTweets={fetchedTweets} />
