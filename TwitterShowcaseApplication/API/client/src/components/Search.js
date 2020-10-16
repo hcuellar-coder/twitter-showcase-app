@@ -90,7 +90,6 @@ function Search() {
     }
 
     function handleLocalStorage() {
-        console.log('handling localstorage');
         if (localStorage.getItem('searchInput')) {
             setSearch(localStorage.getItem('searchInput'));
             setFetchedTweets(JSON.parse(localStorage.getItem('searchResults')));
@@ -118,8 +117,8 @@ function Search() {
             <div id="search-bar-div">
                 <Form.Control id="searchBar" type="text" placeholder="Search" onChange={handleOnChange} value={search} autoComplete="off" />
                 <div id="buttons-div">
-                    <Button className="button" variant="primary" onClick={fetchUserTweets}>User</Button>
-                    <Button className="button" variant="success" onClick={fetchContentTweets}>Content</Button>
+                    <Button className="button" variant="secondary" onClick={fetchUserTweets}>User</Button>
+                    <Button className="button" variant="secondary" onClick={fetchContentTweets}>Content</Button>
                 </div>
             </div>
             <Tweets fetchedTweets={fetchedTweets} />

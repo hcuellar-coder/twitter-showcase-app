@@ -8,7 +8,7 @@ import Layout from './components/Layout';
 
 function App() {
   return (
-    <div>
+    <div className="app-div">
       <Layout>
         <Route exact path='/' component={Home} />
         <Route path='/search' component={Search} />
