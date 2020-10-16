@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Card, Image, Modal, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRetweet, faHeart } from '@fortawesome/free-solid-svg-icons';
 import parseResults from '../services/ParseResults';
 import parse from 'html-react-parser';
-// import './RandomTweet.css';
 
 function RandomTweet() {
-    const [userInfo, setUserInfo] = useState([]);
     const [userTweet, setUserTweet] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const users = ['@NASA', '@SpaceX', '@qikipedia', '@PopSci', '@WIREDScience'];
+    const [userInfo, setUserInfo] = useState(() => {
+        if (localStorage.getItem('userInfo')) {
+            return (JSON.parse(localStorage.getItem('userInfo')));
+        } else {
+            fetchUsers();
+        }
+    });
 
     async function fetchUsers(e) {
         let tempUsers = [];
@@ -21,6 +26,7 @@ function RandomTweet() {
                 })
             });
         }
+        localStorage.setItem('userInfo', JSON.stringify(tempUsers));
         setUserInfo(tempUsers);
     }
 
@@ -37,10 +43,6 @@ function RandomTweet() {
         });
     }
 
-    useEffect(() => {
-        fetchUsers();
-    }, [])
-
     function handleClick(screen_name) {
         fetchUserTweet(screen_name);
     }
@@ -51,7 +53,7 @@ function RandomTweet() {
 
     return (
         <div>
-            {userInfo.length === 0
+            {userInfo === undefined
                 ? <div></div>
                 : <div>
                     <Container fluid>
@@ -93,7 +95,7 @@ function RandomTweet() {
                                 <span className="random-username-span">{userTweet.user.name}</span>
                             </Modal.Title>
                             <div className="random-retweet-likes-div">
-                                <span className="random-retweet-count-span">
+                                <span className="retweet-count-span">
                                     <FontAwesomeIcon icon={faRetweet} />
                                     {userTweet.retweet_count}
                                 </span>
