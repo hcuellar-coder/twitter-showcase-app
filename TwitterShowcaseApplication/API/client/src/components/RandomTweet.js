@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRetweet, faHeart } from '@fortawesome/free-solid-svg-icons';
 import parseResults from '../services/ParseResults';
 import parse from 'html-react-parser';
-import './RandomTweet.css';
+// import './RandomTweet.css';
 
 function RandomTweet() {
     const [userInfo, setUserInfo] = useState([]);

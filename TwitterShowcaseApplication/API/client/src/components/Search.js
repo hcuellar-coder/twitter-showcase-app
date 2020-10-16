@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import parseResults from '../services/ParseResults';
 import Tweets from './Tweets';
-import './Search.css';
+// import './Search.css';
 
 
 function Search() {

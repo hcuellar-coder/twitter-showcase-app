@@ -5,7 +5,7 @@ import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import parseModal from '../services/ParseModal';
 import parse from 'html-react-parser';
-import './Tweet.css';
+// import './Tweet.css';
 
 function Tweets(props) {
     const [showModal, setShowModal] = useState(false);
