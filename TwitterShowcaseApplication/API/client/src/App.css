@@ -1,17 +1,21 @@
-.Navlink{
-    color: grey;
-    margin-right: 20px;
-}
+@media screen and (min-width: 851px) {
+    .button {
+        font-size: 1.75vw;
+    }
 
-.Navlink:hover {
-    color: black;
-    text-decoration: none;
-    margin-right: 20px;
+    #user-search-h2 {
+      font-size: 3vw;
+    }
 }
+  
+  @media screen and (max-width: 850px) {
+    .button {
+        font-size: 4.5vw;
+    }
 
-.Navlink.active {
-    text-decoration: underline;
-    margin-right: 20px;
+    #user-search-h2 {
+      font-size: 6vw;
+    }
 }
 
 .button {
@@ -32,8 +36,20 @@
     
 }
 
+.card-body {
+    padding-top: 0;
+}
+
+.card-title {
+    padding-top: 5px;
+}
+
 .container-fluid {
     max-width: 800px;
+}
+
+.likes-count-span {
+    margin-right: 15px;
 }
 
 .media_photo_div {
@@ -69,67 +85,33 @@
     border-radius: 25px;
 }
 
-.card-title {
-    padding-top: 5px;
-}
-
-.card-body {
-    padding-top: 0;
-    /* display: flex;
-    width: 200px; */
-}
-
-.retweeted-span {
-    font-size: 14px;
-    margin-top: 10px;
-    margin-left: 15px;
-}
-
-.tweet-title-div{
-    margin-top: 10px;
-    margin-left: 15px;
-}
-
-.username-span {
-    font-size: 16px;
-    margin-left: 5px;
-}
-
-.screen-name-div{
-    margin-top: -20px;
-    margin-left: 50px;
-}
-
-.screen-name-span {
-    font-size: 16px;
-}
-
-.retweet-likes-span {
-    font-size: 16px;
-    float: right;
-    margin-top: -40px;
-}
-
-.retweet-count-span {
-    margin-right: 10px;
-}  
-.likes-count-span {
-    margin-right: 15px;
-}  
-
-.random-card-img {
-    max-width: 100%;
-   max-height: 100%;
-    border-radius: 55px;
-}
-
 .modal-header {
     display: block;
     padding-bottom: 5px;
 }
 
+.modal-media-div {
+    margin-top: 10px;
+}
+
 .modal-title {
     margin-top: 5px;
+}
+
+.Navlink{
+    color: grey;
+    margin-right: 20px;
+}
+
+.Navlink:hover {
+    color: black;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.Navlink.active {
+    text-decoration: underline;
+    margin-right: 20px;
 }
 
 .random-username-span {
@@ -142,12 +124,54 @@
     font-size: 24px;
 }
 
-.random-retweet-count-span {
+.random-card-img {
+    max-width: 100%;
+   max-height: 100%;
+    border-radius: 55px;
+}
+
+.retweet-likes-span {
+    font-size: 16px;
+    float: right;
+    margin-top: -40px;
+}
+
+.retweet-count-span {
     margin-right: 10px;
 }
 
-.modal-media-div {
+.retweeted-span {
+    font-size: 14px;
     margin-top: 10px;
+    margin-left: 15px;
+}
+
+.screen-name-div{
+    margin-top: -20px;
+    margin-left: 50px;
+}
+
+.screen-name-span {
+    font-size: 16px;
+}
+
+.tweet-title-div{
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.username-span {
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+#buttons-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    max-width: 500px;
+    width: 100%;
+    margin-top: 5px;
 }
 
 #search-bar-div {
@@ -171,30 +195,3 @@
     text-align: center;
     justify-content: center;
 }
-
-#buttons-div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    max-width: 500px;
-    width: 100%;
-    margin-top: 5px;
-}
-
-@media screen and (min-width: 851px) {
-    #user-search-h2 {
-      font-size: 3vw;
-    }
-    .button {
-        font-size: 1.75vw;
-    }
-  }
-  
-  @media screen and (max-width: 850px) {
-    #user-search-h2 {
-      font-size: 6vw;
-    }
-    .button {
-        font-size: 4.5vw;
-    }
-  }
