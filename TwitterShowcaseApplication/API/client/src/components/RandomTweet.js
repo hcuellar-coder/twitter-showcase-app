@@ -56,7 +56,7 @@ function RandomTweet() {
             {userInfo === undefined
                 ? <div></div>
                 : <div>
-                    <Container fluid>
+                    <Container id="random-tweet-container" fluid>
                         {userInfo.map(
                             (user, index) =>
                                 <Card key={index} onClick={() => { handleClick(user.screen_name) }}>

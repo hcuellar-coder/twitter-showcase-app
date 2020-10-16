@@ -1,4 +1,4 @@
-.app-div {
+body {
   /* background-image: url("./images/mountains.jpg"); */
   background-color: rgb(29, 161, 242);
   background-repeat: no-repeat;
@@ -6,8 +6,7 @@
   background-size: cover;
 }
 
-.button:active {
-    font-size: 1.5vw;
+.button.active {
     text-align: center;
     margin-right: 5px;
     max-width: 245px;
@@ -18,7 +17,6 @@
 }
 
 .button {
-    font-size: 1.5vw;
     text-align: center;
     margin-right: 5px;
     max-width: 245px;
@@ -173,6 +171,15 @@
     max-width: 500px;
     width: 100%;
     margin-top: 5px;
+}
+
+#home-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#random-tweet-container {
+    margin-top: 10px;
 }
 
 #search-bar-div {
