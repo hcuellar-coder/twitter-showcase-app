@@ -17,7 +17,7 @@ function Home() {
                             You can Search based on user or content in the search page, or utilize the random tweet page to pull a random
                             tweet from the selected choices. Lets dive right into it!
                         </p>
-                        <img className="media-gif" src={TwitterLogo} alt={TwitterLoading} />
+                        <img className="media-gif" src={TwitterLogo} />
                     </Card.Body>
                 </Card>
             </Container>
