@@ -209,7 +209,8 @@ body {
     display: flex;
     text-align: center;
     justify-content: center;
-    color: white;margin-top: 5px;
+    color: white;
+    margin-top: 5px;
 }
 
 @media screen and (min-width: 851px) {
