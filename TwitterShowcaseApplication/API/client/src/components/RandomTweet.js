@@ -55,7 +55,7 @@ function RandomTweet() {
     return (
         <div>
             {userInfo === undefined
-                ? <Container id="tweet-loading-container" fluid><img className="media-gif" src={TwitterLoading} /></Container>
+                ? <Container id="tweet-loading-container" fluid><Image className="media-gif" src={TwitterLoading} /></Container>
                 : <div>
                     <Container id="random-tweet-container" fluid>
                         {userInfo.map(

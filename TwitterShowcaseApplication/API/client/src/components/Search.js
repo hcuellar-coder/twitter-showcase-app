@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Container, Image } from 'react-bootstrap';
 import parseResults from '../services/ParseResults';
 import Tweets from './Tweets';
 import TwitterLoading from '../graphics/loading.gif';
@@ -124,7 +124,7 @@ function Search() {
                 </div>
             </div>
             {fetchedTweets.length === 0
-                ? <Container id="tweet-loading-container" fluid><img className="media-gif" src={TwitterLoading} /></Container>
+                ? <Container id="tweet-loading-container" fluid><Image className="media-gif" src={TwitterLoading} /></Container>
                 : <Tweets fetchedTweets={fetchedTweets} />
             }
         </div>

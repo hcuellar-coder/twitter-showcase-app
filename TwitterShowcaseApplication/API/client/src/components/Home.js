@@ -1,7 +1,6 @@
 import React from 'react';
-import { Card, Container } from 'react-bootstrap';
+import { Card, Container, Image } from 'react-bootstrap';
 import TwitterLogo from '../graphics/Twitter.gif';
-import TwitterLoading from '../graphics/loading.gif';
 
 function Home() {
     return (
@@ -14,10 +13,10 @@ function Home() {
                     <Card.Body>
                         <p>
                             This is a simple web application that utilizes the Twitter API to retrieve twitter timeline information.
-                            You can Search based on user or content in the search page, or utilize the random tweet page to pull a random
-                            tweet from the selected choices. Lets dive right into it!
+                            You can search based on user or content in the search page, or utilize the random tweet page to pull a random
+                            tweet from the selected choices. Hope you enjoy it!
                         </p>
-                        <img className="media-gif" src={TwitterLogo} />
+                        <Image className="media-gif" src={TwitterLogo} />
                     </Card.Body>
                 </Card>
             </Container>
