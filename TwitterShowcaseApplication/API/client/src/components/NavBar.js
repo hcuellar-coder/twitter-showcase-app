@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function NavBar() {
     const [expanded, setExpanded] = useState(false);
 
     return (
-        <Navbar expanded={expanded} collapseOnSelect bg="light" expand="md" sticky="top">
-            <Navbar.Brand tag={Link} to='/'>Twitter Showcase</Navbar.Brand>
+        <Navbar id="nav-bar" expanded={expanded} collapseOnSelect expand="md" sticky="top">
+            <Navbar.Brand to='/'>Twitter Showcase</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded(expanded ? false : "expanded")} />
             <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto" onClick={() => setExpanded(false)}>
+                <Nav className="ml-auto" onClick={() => setExpanded(false)}>
                     <NavItem>
                         <NavLink className='Navlink' to='/' exact={true} >Home </NavLink>
                     </NavItem>

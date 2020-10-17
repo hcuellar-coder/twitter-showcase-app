@@ -1,5 +1,7 @@
 import React from 'react';
-import { Card, Image, Modal, Container } from 'react-bootstrap';
+import { Card, Container } from 'react-bootstrap';
+import TwitterLogo from '../graphics/Twitter.gif';
+import TwitterLoading from '../graphics/loading.gif';
 
 function Home() {
     return (
@@ -11,11 +13,11 @@ function Home() {
                     </Card.Title>
                     <Card.Body>
                         <p>
-                            Want to semi-stalk your prefered influential social figures, but dont want to make a twitter account?
-                            Well say no more, we've got here a twitter application that lets you, yes You! Read [insert-influential-persons-name-here]'s content!
-                            Don't have any one that you care to follow or listen to but just want to get your doctors recommended daily dose of tweet!? Well we have a random tweet page for you!
-                            So Head on Over to Eddie's Tweets Jamboree, for the nice sweet tweet time....yuppers
-                     </p>
+                            This is a simple web application that utilizes the Twitter API to retrieve twitter timeline information.
+                            You can Search based on user or content in the search page, or utilize the random tweet page to pull a random
+                            tweet from the selected choices. Lets dive right into it!
+                        </p>
+                        <img className="media-gif" src={TwitterLogo} alt={TwitterLoading} />
                     </Card.Body>
                 </Card>
             </Container>

@@ -6,16 +6,6 @@ body {
   background-size: cover;
 }
 
-.button.active {
-    text-align: center;
-    margin-right: 5px;
-    max-width: 245px;
-    width: 100%;
-    border-radius: 25px;
-    background-color: rgb(90, 98, 104);
-    color: white;
-}
-
 .button {
     text-align: center;
     margin-right: 5px;
@@ -51,34 +41,34 @@ body {
     margin-right: 15px;
 }
 
-.media_photo_div {
+.media-photo-div {
     display: flex;
     justify-content: center;
 }
 
-.media_photo {
+.media-photo {
    max-width: 100%;
    max-height: 100%;
    border-radius: 25px;
 }
 
-.media_video_div {
+.media-video-div {
     display: flex;
     justify-content: center;
 }
 
-.media_video {
+.media-video {
     max-width: 100%;
     max-height: 100%;
     border-radius: 25px;
 }
 
-.media_gif_div {
+.media-gif-div {
     display: flex;
     justify-content: center;
 }
 
-.media_gif{
+.media-gif{
     max-width: 100%;
     max-height: 100%;
     border-radius: 25px;
@@ -97,18 +87,25 @@ body {
     margin-top: 5px;
 }
 
+.navbar-nav {
+    float: right;
+    text-align: right;
+    margin-top: 5px
+}
+
 .Navlink{
-    color: grey;
+    color: black;
     margin-right: 20px;
 }
 
 .Navlink:hover {
-    color: black;
+    color: rgb(29, 161, 242);
     text-decoration: none;
     margin-right: 20px;
 }
 
 .Navlink.active {
+    color: rgb(29, 161, 242);
     text-decoration: underline;
     margin-right: 20px;
 }
@@ -119,7 +116,7 @@ body {
 
 .random-retweet-likes-div {
     float: right;
-    margin-top: -6%;
+    margin-top: -10px;
     font-size: 24px;
 }
 
@@ -132,7 +129,8 @@ body {
 .retweet-likes-span {
     font-size: 16px;
     float: right;
-    margin-top: -40px;
+    margin-top: -60px;
+    margin-right: 20px;
 }
 
 .retweet-count-span {
@@ -170,12 +168,16 @@ body {
     justify-content: space-evenly;
     max-width: 500px;
     width: 100%;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 #home-container {
     margin-top: 20px;
     text-align: center;
+}
+
+#nav-bar {
+    background-color: white;
 }
 
 #random-tweet-container {
@@ -198,11 +200,16 @@ body {
     border-radius: 25px;
 }
 
+#tweet-loading-container{
+    display: flex;
+    justify-content: center;
+}
+
 #user-search-h2 {
     display: flex;
     text-align: center;
     justify-content: center;
-    color: white;
+    color: white;margin-top: 5px;
 }
 
 @media screen and (min-width: 851px) {

@@ -81,6 +81,7 @@ function Search() {
 
     function handleOnChange(e) {
         e.preventDefault();
+        setSearchType('');
         setSearch(e.target.value);
     }
 

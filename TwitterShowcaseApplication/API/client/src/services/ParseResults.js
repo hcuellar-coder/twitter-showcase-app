@@ -55,7 +55,7 @@ export default async function parseResults(results) {
                             format = (media.media_url_https).slice(-3);
                             text = text.replace(`${media.url}`, '');
                             tempTweets[iteration].full_text = text;
-                            mediaText = `<div class="media_photo_div"><Image class="media_photo" 
+                            mediaText = `<div class="media-photo-div"><Image class="media-photo" 
                                             src="${url}?format=${format}&name=small" fluid/></div>`;
                             tempTweets[iteration].media_text = mediaText;
                             break;
@@ -74,7 +74,7 @@ export default async function parseResults(results) {
                             format = (media.media_url_https).slice(-3);
                             text = text.replace(`${media.url}`, '');
                             tempTweets[iteration].full_text = text;
-                            mediaText = `<div class="media_video_div"><video class="media_video" 
+                            mediaText = `<div class="media-video-div"><video class="media-video" 
                                             preload="none" playsinline controls poster="${url}?format=${format}&name=small">
                                             <source src="${video}" type="${videoContentType}"></video></div>`;
                             tempTweets[iteration].media_text = mediaText;
@@ -82,7 +82,7 @@ export default async function parseResults(results) {
                         case 'animated_gif':
                             text = text.replace(`${media.url}`, '');
                             tempTweets[iteration].full_text = text;
-                            mediaText = `<div class="media_gif_div"><video class="media_gif" autoplay loop 
+                            mediaText = `<div class="media-gif-div"><video class="media-gif" autoplay loop 
                                             muted preload="auto" playsinline poster="${media.media_url_https}" 
                                             src="${media.video_info.variants[0].url}" type="${media.video_info.variants[0].content_type}"
                                             autoplay ></video></div>`;

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRetweet, faHeart } from '@fortawesome/free-solid-svg-icons';
 import parseResults from '../services/ParseResults';
 import parse from 'html-react-parser';
+import TwitterLoading from '../graphics/loading.gif';
 
 function RandomTweet() {
     const [userTweet, setUserTweet] = useState([]);
@@ -54,7 +55,7 @@ function RandomTweet() {
     return (
         <div>
             {userInfo === undefined
-                ? <div></div>
+                ? <Container id="tweet-loading-container" fluid><img className="media-gif" src={TwitterLoading} /></Container>
                 : <div>
                     <Container id="random-tweet-container" fluid>
                         {userInfo.map(
