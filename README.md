@@ -4,7 +4,7 @@ The application utilizes Twitter API 1.1 and was built using ReactJS (Frontend),
 Run Application [Here](https://twittershowcase-hcuellar.azurewebsites.net/)
 
 <p align="center">
-<img align="center"  width="700" height="400" src="./images/home.png">
+<img align="center"  width="600" height="400" src="./images/home.png">
 </p>
 
 ## Summary
