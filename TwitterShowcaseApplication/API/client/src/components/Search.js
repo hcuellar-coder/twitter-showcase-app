@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Button, Container, Image } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import parseResults from '../services/ParseResults';
 import Tweets from './Tweets';
 import TwitterLoading from '../graphics/loading.gif';
@@ -11,9 +13,11 @@ function Search() {
     const [fetchedTweets, setFetchedTweets] = useState([]);
     const [lastId, setLastId] = useState('');
     const [isFetching, setIsFetching] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     async function fetchUserTweets(e) {
         if (search !== '') {
+            setIsLoading(true);
             setSearchType('user');
             let searchInput = search;
             localStorage.setItem('searchInput', searchInput);
@@ -27,6 +31,7 @@ function Search() {
                             setLastId(results[1]);
                             localStorage.setItem('searchResults', JSON.stringify(results[0]));
                             localStorage.setItem('lastId', results[1]);
+                            setIsLoading(false);
                         });
                     })
                 }
@@ -51,6 +56,7 @@ function Search() {
 
     async function fetchContentTweets(e) {
         if (search !== '') {
+            setIsLoading(true);
             setSearchType('content');
             let searchInput = search;
             localStorage.setItem('searchInput', searchInput);
@@ -63,6 +69,7 @@ function Search() {
                             setLastId(results[1]);
                             localStorage.setItem('searchResults', JSON.stringify(results[0]));
                             localStorage.setItem('lastId', results[1]);
+                            setIsLoading(false);
                         });
                     })
                 }
@@ -91,8 +98,26 @@ function Search() {
     }
 
     function handleScroll() {
-        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
-        setIsFetching(true);
+        let scrollPos = window.innerHeight + document.documentElement.scrollTop;
+        let documentHeight = document.documentElement.offsetHeight;
+
+
+        if (scrollPos >= (documentHeight - 1000)) {
+            setIsFetching(true);
+        }
+    }
+
+    function handleClearButton(e) {
+        e.preventDefault();
+        setSearch('');
+        setFetchedTweets([]);
+        setLastId('');
+        setSearchType('');
+        localStorage.removeItem('searchInput');
+        localStorage.removeItem('searchResults');
+        localStorage.removeItem('lastId');
+        localStorage.removeItem('searchType');
+
     }
 
     function handleLocalStorage() {
@@ -113,22 +138,30 @@ function Search() {
     }, [])
 
     useEffect(() => {
-        if (!isFetching) return;
-        searchType === 'user' ? fetchCursorUserTweets() : fetchCursorContentTweets()
+        if (!isFetching) {
+            return;
+        } else {
+            if (searchType === 'user') {
+                fetchCursorUserTweets();
+            } else {
+                fetchCursorContentTweets();
+            }
+        }
     }, [isFetching])
 
     return (
-        <div>
+        <div id="search-div">
             <h2 id="user-search-h2">Search for User or Content Tweets</h2>
             <div id="search-bar-div">
-                <Form.Control id="searchBar" type="text" placeholder="Search" onChange={handleOnChange} value={search} autoComplete="off" />
-                <div id="buttons-div">
-                    <Button className="button" active={searchType === 'user' ? true : false} variant="secondary" onClick={fetchUserTweets}>User</Button>
-                    <Button className="button" active={searchType === 'content' ? true : false} variant="secondary" onClick={fetchContentTweets}>Content</Button>
-                </div>
+                <Form.Control id="search-bar" type="text" placeholder="Search" onChange={handleOnChange} value={search} autoComplete="off" />
+                <Button id="search-clear-button" onClick={handleClearButton}><FontAwesomeIcon icon={faTimesCircle} /></Button>
             </div>
-            {fetchedTweets.length === 0
-                ? <Container id="tweet-loading-container" fluid><Image className="media-gif" src={TwitterLoading} /></Container>
+            <div id="buttons-div">
+                <Button className="button" active={searchType === 'user' ? true : false} variant="secondary" onClick={fetchUserTweets}>User</Button>
+                <Button className="button" active={searchType === 'content' ? true : false} variant="secondary" onClick={fetchContentTweets}>Content</Button>
+            </div>
+            {(fetchedTweets.length === 0)
+                ? (isLoading ? <Container id="tweet-loading-container" fluid><Image className="media-gif" src={TwitterLoading} /></Container> : <div></div>)
                 : <Tweets fetchedTweets={fetchedTweets} />
             }
         </div>

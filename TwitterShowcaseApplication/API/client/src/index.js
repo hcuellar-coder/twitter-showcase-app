@@ -5,10 +5,12 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 
 ReactDOM.render(
   <BrowserRouter>
     <App />
+    <ScrollUpButton ContainerClassName="scroll-button" />
   </BrowserRouter>,
   document.getElementById('root')
 );

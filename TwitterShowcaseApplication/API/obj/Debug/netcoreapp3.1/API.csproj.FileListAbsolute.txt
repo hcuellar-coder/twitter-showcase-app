@@ -1,8 +1,5 @@
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\appsettings.json
-C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\client\package-lock.json
-C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\client\package.json
-C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\client\public\manifest.json
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\API.exe
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\obj\Debug\netcoreapp3.1\API.csprojAssemblyReference.cache
@@ -123,3 +120,4 @@ C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseAppli
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\API.dll.config
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\package-lock.json
 C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\Config\Edit-App.config
+C:\Users\herib\Documents\SDMM Projects\twitter-showcase-app\TwitterShowcaseApplication\API\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\TwitterShowcase-hcuellar - Web Deploy\profile.arm.json
