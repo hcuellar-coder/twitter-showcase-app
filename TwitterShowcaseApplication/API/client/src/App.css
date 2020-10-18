@@ -29,7 +29,7 @@ body {
 }
 
 .card-title {
-    padding-top: 5px;
+    padding-top: 10px;
 }
 
 .container-fluid {
@@ -138,8 +138,7 @@ body {
 
 .retweeted-span {
     font-size: 14px;
-    margin-top: 10px;
-    margin-left: 15px;
+    margin-left: 20px;
 }
 
 .scroll-button {
