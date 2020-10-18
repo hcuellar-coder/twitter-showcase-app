@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Card, Image, Modal, Container } from 'react-bootstrap';
+import { Card, Image, Modal, Container, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRetweet, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faRetweet, faHeart, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import parseResults from '../services/ParseResults';
 import parse from 'html-react-parser';
 import TwitterLoading from '../graphics/loading.gif';
@@ -83,7 +83,8 @@ function RandomTweet() {
                     size="lg"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered>
-                    <Modal.Header>
+                    <Modal.Header >
+                        <Button id="random-modal-header-button" onClick={handleClose}><FontAwesomeIcon icon={faTimesCircle} /></Button>
                         <div>
                             {userTweet.retweet === undefined
                                 ? <div></div>

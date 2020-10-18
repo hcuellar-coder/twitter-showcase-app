@@ -50,13 +50,17 @@ function Search() {
             let searchInput = search;
             searchInput = searchInput.split(" ").join('');
             await fetch(`api/tweets/cursor_timeline?user=${searchInput}&lastId=${lastId}`).then(async (results) => {
-                await (results.json()).then(async (results) => {
-                    await parseResults(results).then((results) => {
-                        const newList = [...fetchedTweets, ...results[0]];
-                        setFetchedTweets(newList);
-                        setLastId(results[1]);
-                    });
-                })
+                if (results.status >= 200 && results.status <= 299) {
+                    await (results.json()).then(async (results) => {
+                        await parseResults(results).then((results) => {
+                            const newList = [...fetchedTweets, ...results[0]];
+                            setFetchedTweets(newList);
+                            setLastId(results[1]);
+                        });
+                    })
+                } else {
+                    setFetchFailed(true);
+                }
             });
         }
     }
@@ -96,13 +100,17 @@ function Search() {
             setIsFetching(false);
             let searchInput = search;
             await fetch(`api/tweets/cursor_search?content=${searchInput}&lastId=${lastId}`).then(async (results) => {
-                await (results.json()).then(async (results) => {
-                    await parseResults(results).then((results) => {
-                        const newList = [...fetchedTweets, ...results[0]];
-                        setFetchedTweets(newList);
-                        setLastId(results[1]);
-                    });
-                })
+                if (results.status >= 200 && results.status <= 299) {
+                    await (results.json()).then(async (results) => {
+                        await parseResults(results).then((results) => {
+                            const newList = [...fetchedTweets, ...results[0]];
+                            setFetchedTweets(newList);
+                            setLastId(results[1]);
+                        });
+                    })
+                } else {
+                    setFetchFailed(true);
+                }
             });
         }
     }

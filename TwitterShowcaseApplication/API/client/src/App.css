@@ -156,8 +156,9 @@ body {
     justify-content: center;
     border: 3px solid rgba(0,0,0,.125);
     border-radius: 25px;
-    margin-bottom: 10px;
+    margin-top: 10px;
 }
+
 .tweet-title-div{
     margin-top: 10px;
     margin-left: 15px;
@@ -180,7 +181,6 @@ body {
     justify-content: space-evenly;
     max-width: 500px;
     width: 100%;
-    margin-bottom: 10px;
 }
 
 #error-card {
@@ -201,6 +201,21 @@ body {
     color: rgb(29, 161, 242);
     margin-right: 10px;
 }
+
+#random-modal-header-button {
+    font-size: 24px;
+    float: right;
+    background-color: transparent;
+    color: rgb(29, 161, 242);
+    border: none;
+    outline: 0;
+    box-shadow: none;
+}
+
+#random-modal-header-button :hover{
+    color: rgb(90, 98, 104);
+}
+
 
 #random-tweet-container {
     margin-top: 10px;

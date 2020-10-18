@@ -105,7 +105,7 @@ function convertTime(textTime) {
     const difference = new Date() - tweetTime;
 
     const seconds = (difference / 1000).toFixed(0);
-    const minutes = (difference / (1000 * 60)).toFixed(0);
+    const minutes = Math.floor((difference / (1000 * 60)));
     const hours = Math.floor((difference / (1000 * 60 * 60)));
 
     const month = tweetTime.toLocaleString('default', { month: 'short' });

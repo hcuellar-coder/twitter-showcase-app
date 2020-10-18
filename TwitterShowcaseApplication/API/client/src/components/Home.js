@@ -6,7 +6,7 @@ function Home() {
     return (
         <div>
             <Container id="home-container" fluid>
-                <Card>
+                <Card className="tweet-card">
                     <Card.Title>
                         <div><h4>Welcome to the Twitter Showcase!</h4></div>
                     </Card.Title>
