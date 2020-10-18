@@ -11,8 +11,8 @@ function RandomTweet() {
     const [showModal, setShowModal] = useState(false);
     const users = ['@NASA', '@SpaceX', '@qikipedia', '@PopSci', '@WIREDScience'];
     const [userInfo, setUserInfo] = useState(() => {
-        if (localStorage.getItem('userInfo')) {
-            return (JSON.parse(localStorage.getItem('userInfo')));
+        if (sessionStorage.getItem('userInfo')) {
+            return (JSON.parse(sessionStorage.getItem('userInfo')));
         } else {
             fetchUsers();
         }
@@ -27,7 +27,7 @@ function RandomTweet() {
                 })
             });
         }
-        localStorage.setItem('userInfo', JSON.stringify(tempUsers));
+        sessionStorage.setItem('userInfo', JSON.stringify(tempUsers));
         setUserInfo(tempUsers);
     }
 

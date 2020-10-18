@@ -20,8 +20,8 @@ function Search() {
             setIsLoading(true);
             setSearchType('user');
             let searchInput = search;
-            localStorage.setItem('searchInput', searchInput);
-            localStorage.setItem('searchType', 'user');
+            sessionStorage.setItem('searchInput', searchInput);
+            sessionStorage.setItem('searchType', 'user');
             searchInput = searchInput.split(" ").join('');
             await fetch(`api/tweets/timeline?user=${searchInput}`).then(async (results) => {
                 if (results.status >= 200 && results.status <= 299) {
@@ -29,8 +29,8 @@ function Search() {
                         await parseResults(results).then((results) => {
                             setFetchedTweets(results[0]);
                             setLastId(results[1]);
-                            localStorage.setItem('searchResults', JSON.stringify(results[0]));
-                            localStorage.setItem('lastId', results[1]);
+                            sessionStorage.setItem('searchResults', JSON.stringify(results[0]));
+                            sessionStorage.setItem('lastId', results[1]);
                             setIsLoading(false);
                         });
                     })
@@ -59,16 +59,16 @@ function Search() {
             setIsLoading(true);
             setSearchType('content');
             let searchInput = search;
-            localStorage.setItem('searchInput', searchInput);
-            localStorage.setItem('searchType', 'content');
+            sessionStorage.setItem('searchInput', searchInput);
+            sessionStorage.setItem('searchType', 'content');
             await fetch(`api/tweets/search?content=${searchInput}`).then(async (results) => {
                 if (results.status >= 200 && results.status <= 299) {
                     await (results.json()).then(async (results) => {
                         await parseResults(results).then((results) => {
                             setFetchedTweets(results[0]);
                             setLastId(results[1]);
-                            localStorage.setItem('searchResults', JSON.stringify(results[0]));
-                            localStorage.setItem('lastId', results[1]);
+                            sessionStorage.setItem('searchResults', JSON.stringify(results[0]));
+                            sessionStorage.setItem('lastId', results[1]);
                             setIsLoading(false);
                         });
                     })
@@ -113,24 +113,24 @@ function Search() {
         setFetchedTweets([]);
         setLastId('');
         setSearchType('');
-        localStorage.removeItem('searchInput');
-        localStorage.removeItem('searchResults');
-        localStorage.removeItem('lastId');
-        localStorage.removeItem('searchType');
+        sessionStorage.removeItem('searchInput');
+        sessionStorage.removeItem('searchResults');
+        sessionStorage.removeItem('lastId');
+        sessionStorage.removeItem('searchType');
 
     }
 
-    function handleLocalStorage() {
-        if (localStorage.getItem('searchInput')) {
-            setSearch(localStorage.getItem('searchInput'));
-            setFetchedTweets(JSON.parse(localStorage.getItem('searchResults')));
-            setLastId(localStorage.getItem('lastId'));
-            setSearchType(localStorage.getItem('searchType'));
+    function handleSessionStorage() {
+        if (sessionStorage.getItem('searchInput')) {
+            setSearch(sessionStorage.getItem('searchInput'));
+            setFetchedTweets(JSON.parse(sessionStorage.getItem('searchResults')));
+            setLastId(sessionStorage.getItem('lastId'));
+            setSearchType(sessionStorage.getItem('searchType'));
         }
     }
 
     useEffect(() => {
-        handleLocalStorage();
+        handleSessionStorage();
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);

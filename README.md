@@ -8,7 +8,7 @@ Run Application [Here](https://twittershowcase-hcuellar.azurewebsites.net/)
 </p>
 
 ## Summary
-This web application utilizes Twitter API 1.1 to retrieve tweets and display them using Bootstrap for styling and responsiveness. ReactJS was used to develop the frontend of the web application. While the backend uses C# with ASP.NET Core for WebAPI and Internal API calls. Local storage is used to store the last search, search type, and random tweet selection for a smoother user experience.
+This web application utilizes Twitter API 1.1 to retrieve tweets and display them using Bootstrap for styling and responsiveness. ReactJS was used to develop the frontend of the web application. While the backend uses C# with ASP.NET Core for WebAPI and Internal API calls. Session storage is used to store the last search, search type, and random tweet selection for a smoother user experience.
 
 ### Search Page
 The search page allows you to search based on a user or content with the click of the corresponding button. The user search will retrieve data from a specific user's timeline. The content search is far broader and will return tweets with any mention of the terms in the search bar. So, there is a need to be more specific with your searches. Both options will cursor more tweets as you scroll down looking for more tweets, making the experience smoother.
