@@ -20,14 +20,16 @@ function Search() {
             localStorage.setItem('searchType', 'user');
             searchInput = searchInput.split(" ").join('');
             await fetch(`api/tweets/timeline?user=${searchInput}`).then(async (results) => {
-                await (results.json()).then(async (results) => {
-                    await parseResults(results).then((results) => {
-                        setFetchedTweets(results[0]);
-                        setLastId(results[1]);
-                        localStorage.setItem('searchResults', JSON.stringify(results[0]));
-                        localStorage.setItem('lastId', results[1]);
-                    });
-                })
+                if (results.status >= 200 && results.status <= 299) {
+                    await (results.json()).then(async (results) => {
+                        await parseResults(results).then((results) => {
+                            setFetchedTweets(results[0]);
+                            setLastId(results[1]);
+                            localStorage.setItem('searchResults', JSON.stringify(results[0]));
+                            localStorage.setItem('lastId', results[1]);
+                        });
+                    })
+                }
             });
         }
     }
@@ -54,14 +56,16 @@ function Search() {
             localStorage.setItem('searchInput', searchInput);
             localStorage.setItem('searchType', 'content');
             await fetch(`api/tweets/search?content=${searchInput}`).then(async (results) => {
-                await (results.json()).then(async (results) => {
-                    await parseResults(results).then((results) => {
-                        setFetchedTweets(results[0]);
-                        setLastId(results[1]);
-                        localStorage.setItem('searchResults', JSON.stringify(results[0]));
-                        localStorage.setItem('lastId', results[1]);
-                    });
-                })
+                if (results.status >= 200 && results.status <= 299) {
+                    await (results.json()).then(async (results) => {
+                        await parseResults(results).then((results) => {
+                            setFetchedTweets(results[0]);
+                            setLastId(results[1]);
+                            localStorage.setItem('searchResults', JSON.stringify(results[0]));
+                            localStorage.setItem('lastId', results[1]);
+                        });
+                    })
+                }
             });
         }
     }

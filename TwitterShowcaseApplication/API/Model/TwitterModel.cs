@@ -48,7 +48,6 @@ namespace API.Model
             {
                 errorString = $"There was an error getting our tweets: {response.ReasonPhrase}";
                 throw new Exception(errorString);
-
             }
         }
 
@@ -71,7 +70,6 @@ namespace API.Model
             {
                 errorString = $"There was an error getting our tweets: {response.ReasonPhrase}";
                 throw new Exception(errorString);
-
             }
         }
 
@@ -94,7 +92,6 @@ namespace API.Model
             {
                 errorString = $"There was an error getting our tweets: {response.ReasonPhrase}";
                 throw new Exception(errorString);
-
             }
         }
 
@@ -117,7 +114,6 @@ namespace API.Model
             {
                 errorString = $"There was an error getting our tweets: {response.ReasonPhrase}";
                 throw new Exception(errorString);
-
             }
         }
 
@@ -139,7 +135,6 @@ namespace API.Model
             {
                 errorString = $"There was an error getting our tweets: {response.ReasonPhrase}";
                 throw new Exception(errorString);
-
             }
         }
 
@@ -164,7 +159,6 @@ namespace API.Model
             {
                 errorString = $"There was an error getting our tweets: {response.ReasonPhrase}";
                 throw new Exception(errorString);
-
             }
         }
     }

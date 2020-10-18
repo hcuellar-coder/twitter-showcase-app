@@ -55,7 +55,6 @@ namespace API.Controllers
         [HttpGet("users_random")]
         public Task<object> GetUsersRandom(string user)
         {
-
             return _twitterModel.GetUsersRandom(user);
         }
     }
