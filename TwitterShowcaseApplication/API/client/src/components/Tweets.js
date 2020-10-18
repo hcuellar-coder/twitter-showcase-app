@@ -23,7 +23,7 @@ function Tweets(props) {
     }
 
     return (
-        <div>
+        <div id="tweets-div">
             {props.fetchedTweets === undefined
                 ? <div></div>
                 : <Container fluid>
@@ -82,6 +82,7 @@ function Tweets(props) {
                     size="xl"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered>
+                    <Modal.Header className="tweet-header-media-modal" closeButton />
                     <Modal.Body >{parse(modalMedia)}</Modal.Body>
                 </Modal>
             }

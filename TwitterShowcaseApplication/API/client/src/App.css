@@ -159,6 +159,12 @@ body {
     margin-top: 10px;
 }
 
+.tweet-header-media-modal {
+    padding-top: 5px;
+    padding-bottom: 0;
+    border: none;
+}
+
 .tweet-title-div{
     margin-top: 10px;
     margin-left: 15px;
@@ -258,6 +264,10 @@ body {
 
 #search-clear-button:hover {
     color: rgb(90, 98, 104);
+}
+
+#tweets-div {
+    display: contents;
 }
 
 #tweet-loading-container {
