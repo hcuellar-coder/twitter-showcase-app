@@ -26,7 +26,6 @@ The search page allows you to search based on a user or content with the click o
 
 ### Random Tweet Page
 The random tweet page features 5 Twitter user choices, chosen by yours truly. Clicking on a user's card will bring up a simple Tweet modal that will reveal a random tweet from that selected user. 
-#### _Random Tweet Page_
 <p align="center">
 <img   width="700" height="500" src="./images/randomtweet.png">
 </p>
