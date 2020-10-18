@@ -104,9 +104,9 @@ function convertTime(textTime) {
     const tweetTime = new Date(textTime);
     const difference = new Date() - tweetTime;
 
-    const seconds = (difference / 1000).toFixed(0);
-    const minutes = Math.floor((difference / (1000 * 60)));
-    const hours = Math.floor((difference / (1000 * 60 * 60)));
+    const seconds = Math.floor((difference / 1000).toFixed(0));
+    const minutes = Math.floor((difference / (1000 * 60)).toFixed(0));
+    const hours = Math.floor((difference / (1000 * 60 * 60)).toFixed(0));
 
     const month = tweetTime.toLocaleString('default', { month: 'short' });
     const day = tweetTime.toLocaleString('default', { day: 'numeric' });

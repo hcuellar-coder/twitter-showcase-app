@@ -30,7 +30,10 @@ function Errors(props) {
                                 more broad, or start with one word and add along the way. If youre at 10 words...you've gone too far.
                             </Card.Text>
                             <Card.Text>
-                                OR...maybe, now just maybe..you done gone did it
+                                OR...
+                            </Card.Text>
+                            <Card.Text>
+                                Now this is just a maybe... but you done gone did it
                                 and maxed out the apps twitter rate limit. Pat yourself on the back and do come back 15 minutes later...
                             </Card.Text>
 
