@@ -36,11 +36,11 @@ The random tweet page features 5 Twitter user choices, chosen by yours truly. Cl
 </p>
 
 ## Installation
-Rename file "Edit-App.config" to "App.config" file and add Bearer Token into the Bearer key value pair.
+Rename file `Edit-App.config` to `App.config` in `TwitterShowcaseApplication/API/Config/` and add Bearer Token into the Bearer key value pair.
 ```javascript
 <add key="BEARER" value="INSERT BEARER TOKEN"/>
 ```
-To generate a Bearer Token, you will need to set up a Twitter Developer Account and create a Twitter API "App". This will generate a Bearer Token.
+To generate a Bearer Token, you will need to set up a Twitter Developer Account and create a Twitter API App. This will generate a Bearer Token.
 
 ## Author
 Heriberto Cuellar – Full Stack Software Developer - [LinkedIn](linkedin.com/in/heriberto-c-5aa11952)
