@@ -1,7 +1,7 @@
 # Twitter Show Case Application
 The application utilizes Twitter API 1.1 and was built using ReactJS (Frontend), C# with ASP.NET Core (Backend) and styled with Bootstrap 4
 
-Run Code [Here]()
+Run Application [Here](https://twittershowcase-hcuellar.azurewebsites.net/)
 
 <p align="center">
 <img align="center"  width="700" height="400" src="./images/home.png">
