@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 function NavBar() {
     const [expanded, setExpanded] = useState(false);
 
     return (
-        <Navbar id="nav-bar" expanded={expanded} collapseOnSelect expand="md" sticky="top">
-            <Navbar.Brand to='/'>Twitter Showcase</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded(expanded ? false : "expanded")} />
-            <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar id="nav-bar" expanded={expanded} expand="sm" sticky="top">
+            <Navbar.Brand to='/'>
+                <FontAwesomeIcon icon={faTwitter} id="navbar-brand-twitter" />
+            Twitter Showcase
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setExpanded(expanded ? false : "expanded")} />
+            <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="ml-auto" onClick={() => setExpanded(false)}>
                     <NavItem>
                         <NavLink className='Navlink' to='/' exact={true} >Home </NavLink>

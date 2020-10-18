@@ -60,7 +60,7 @@ function RandomTweet() {
                     <Container id="random-tweet-container" fluid>
                         {userInfo.map(
                             (user, index) =>
-                                <Card key={index} onClick={() => { handleClick(user.screen_name) }}>
+                                <Card className="random-card" key={index} onClick={() => { handleClick(user.screen_name) }}>
                                     <Card.Img className="random-card-img" variant="top" src={user.profile_banner_url} />
                                     <Card.Body>
                                         <Card.Title>

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import parseResults from '../services/ParseResults';
 import Tweets from './Tweets';
+import Errors from './Errors';
 import TwitterLoading from '../graphics/loading.gif';
 
 
@@ -14,9 +15,11 @@ function Search() {
     const [lastId, setLastId] = useState('');
     const [isFetching, setIsFetching] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [fetchFailed, setFetchFailed] = useState(false);
 
     async function fetchUserTweets(e) {
         if (search !== '') {
+            setFetchFailed(false);
             setIsLoading(true);
             setSearchType('user');
             let searchInput = search;
@@ -34,28 +37,33 @@ function Search() {
                             setIsLoading(false);
                         });
                     })
+                } else {
+                    setFetchFailed(true);
                 }
             });
         }
     }
 
     async function fetchCursorUserTweets(e) {
-        setIsFetching(false);
-        let searchInput = search;
-        searchInput = searchInput.split(" ").join('');
-        await fetch(`api/tweets/cursor_timeline?user=${searchInput}&lastId=${lastId}`).then(async (results) => {
-            await (results.json()).then(async (results) => {
-                await parseResults(results).then((results) => {
-                    const newList = [...fetchedTweets, ...results[0]];
-                    setFetchedTweets(newList);
-                    setLastId(results[1]);
-                });
-            })
-        });
+        if (!fetchFailed) {
+            setIsFetching(false);
+            let searchInput = search;
+            searchInput = searchInput.split(" ").join('');
+            await fetch(`api/tweets/cursor_timeline?user=${searchInput}&lastId=${lastId}`).then(async (results) => {
+                await (results.json()).then(async (results) => {
+                    await parseResults(results).then((results) => {
+                        const newList = [...fetchedTweets, ...results[0]];
+                        setFetchedTweets(newList);
+                        setLastId(results[1]);
+                    });
+                })
+            });
+        }
     }
 
     async function fetchContentTweets(e) {
         if (search !== '') {
+            setFetchFailed(false);
             setIsLoading(true);
             setSearchType('content');
             let searchInput = search;
@@ -65,30 +73,38 @@ function Search() {
                 if (results.status >= 200 && results.status <= 299) {
                     await (results.json()).then(async (results) => {
                         await parseResults(results).then((results) => {
-                            setFetchedTweets(results[0]);
-                            setLastId(results[1]);
-                            sessionStorage.setItem('searchResults', JSON.stringify(results[0]));
-                            sessionStorage.setItem('lastId', results[1]);
-                            setIsLoading(false);
+                            if (results[0].length === 0) {
+                                setFetchFailed(true);
+                            } else {
+                                setFetchedTweets(results[0]);
+                                setLastId(results[1]);
+                                sessionStorage.setItem('searchResults', JSON.stringify(results[0]));
+                                sessionStorage.setItem('lastId', results[1]);
+                                setIsLoading(false);
+                            }
                         });
                     })
+                } else {
+                    setFetchFailed(true);
                 }
             });
         }
     }
 
     async function fetchCursorContentTweets(e) {
-        setIsFetching(false);
-        let searchInput = search;
-        await fetch(`api/tweets/cursor_search?content=${searchInput}&lastId=${lastId}`).then(async (results) => {
-            await (results.json()).then(async (results) => {
-                await parseResults(results).then((results) => {
-                    const newList = [...fetchedTweets, ...results[0]];
-                    setFetchedTweets(newList);
-                    setLastId(results[1]);
-                });
-            })
-        });
+        if (!fetchFailed) {
+            setIsFetching(false);
+            let searchInput = search;
+            await fetch(`api/tweets/cursor_search?content=${searchInput}&lastId=${lastId}`).then(async (results) => {
+                await (results.json()).then(async (results) => {
+                    await parseResults(results).then((results) => {
+                        const newList = [...fetchedTweets, ...results[0]];
+                        setFetchedTweets(newList);
+                        setLastId(results[1]);
+                    });
+                })
+            });
+        }
     }
 
     function handleOnChange(e) {
@@ -113,6 +129,8 @@ function Search() {
         setFetchedTweets([]);
         setLastId('');
         setSearchType('');
+        setIsLoading(false);
+        setFetchFailed(false);
         sessionStorage.removeItem('searchInput');
         sessionStorage.removeItem('searchResults');
         sessionStorage.removeItem('lastId');
@@ -149,6 +167,17 @@ function Search() {
         }
     }, [isFetching])
 
+    useEffect(() => {
+        if (fetchFailed) {
+            sessionStorage.removeItem('searchInput');
+            sessionStorage.removeItem('searchType');
+        }
+
+    }, [fetchFailed])
+
+
+
+
     return (
         <div id="search-div">
             <h2 id="user-search-h2">Search for User or Content Tweets</h2>
@@ -160,9 +189,13 @@ function Search() {
                 <Button className="button" active={searchType === 'user' ? true : false} variant="secondary" onClick={fetchUserTweets}>User</Button>
                 <Button className="button" active={searchType === 'content' ? true : false} variant="secondary" onClick={fetchContentTweets}>Content</Button>
             </div>
-            {(fetchedTweets.length === 0)
-                ? (isLoading ? <Container id="tweet-loading-container" fluid><Image className="media-gif" src={TwitterLoading} /></Container> : <div></div>)
-                : <Tweets fetchedTweets={fetchedTweets} />
+            {fetchFailed ?
+                <Errors searchType={searchType} />
+                :
+                (fetchedTweets.length === 0) ?
+                    (isLoading ? <Container id="tweet-loading-container" fluid><Image className="media-gif" src={TwitterLoading} /></Container> : <div></div>)
+                    :
+                    <Tweets fetchedTweets={fetchedTweets} />
             }
         </div>
     )

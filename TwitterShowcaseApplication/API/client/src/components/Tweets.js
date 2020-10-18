@@ -30,7 +30,7 @@ function Tweets(props) {
                     {props.fetchedTweets.map
                         ((tweet, index) =>
                             (
-                                <Card key={index} >
+                                <Card className="tweet-card" key={index} >
                                     <Card.Title>
                                         {tweet.retweet === undefined
                                             ? <div></div>
@@ -39,8 +39,10 @@ function Tweets(props) {
                                               </span>
                                         }
                                         <div className="tweet-title-div">
-                                            <Image className="user-image-round" src={tweet.user.profile_image_url_https} roundedCircle />
-                                            <span className="username-span">{tweet.user.name}</span>
+                                            <div className="tweet-user-image-name">
+                                                <Image className="user-image-round" src={tweet.user.profile_image_url_https} roundedCircle />
+                                                <span className="username-span">{tweet.user.name}</span>
+                                            </div>
                                             <div className="screen-name-div">
                                                 <span className="screen-name-span">@{tweet.user.screen_name} - {tweet.timestamp}</span>
                                             </div>
