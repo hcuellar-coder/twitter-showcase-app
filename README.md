@@ -42,9 +42,8 @@ Rename file `Edit-App.config` to `App.config` in `TwitterShowcaseApplication/API
 ```
 To generate a Bearer Token, you will need to set up a Twitter Developer Account and create a Twitter API App. This will generate a Bearer Token.
 
+### What I Learned
+Creating this web application I learned how to integrate a ReactJS Front End with C# in a ASP.NET Core Back End for RESTful web API calls and Internal API calls. Also, it was my first time using Microsoft Visual Studio to deploy my web application using Microsoft Azure. I had a great time creating the application and working through the intricacies of integrating different technologies together. Also working on styling the web applicaiton to work well with Mobile Devices was a treat! I hope you enjoy the using it!
+
 ## Author
 Heriberto Cuellar – Full Stack Software Developer - [LinkedIn](linkedin.com/in/heriberto-c-5aa11952)
-
-
-### Author's Note
-Creating this web application I learned how to integrate a ReactJS Front End with C# in a ASP.NET Core Back End for RESTful web API calls and Internal API calls. Also, it was my first time using Microsoft Visual Studio to deploy my web application using Microsoft Azure. I had a great time creating the application and working through the intricacies of integrating different technologies together. Also working on styling the web applicaiton to work well with Mobile Devices was a treat! I hope you enjoy the using it!

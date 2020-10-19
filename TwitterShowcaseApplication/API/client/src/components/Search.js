@@ -16,6 +16,7 @@ function Search() {
     const [isFetching, setIsFetching] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [fetchFailed, setFetchFailed] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(true);
 
     async function fetchUserTweets(e) {
         if (search !== '') {
@@ -183,6 +184,14 @@ function Search() {
 
     }, [fetchFailed])
 
+    useEffect(() => {
+        if (search !== '') {
+            setIsDisabled(false);
+        } else {
+            setIsDisabled(true);
+        }
+    }, [search])
+
 
 
 
@@ -191,11 +200,11 @@ function Search() {
             <h2 id="user-search-h2">Search for User or Content Tweets</h2>
             <div id="search-bar-div">
                 <Form.Control id="search-bar" type="text" placeholder="Search" onChange={handleOnChange} value={search} autoComplete="off" />
-                <Button id="search-clear-button" onClick={handleClearButton}><FontAwesomeIcon icon={faTimesCircle} /></Button>
+                <Button id="search-clear-button" disabled={isDisabled} onClick={handleClearButton}><FontAwesomeIcon icon={faTimesCircle} /></Button>
             </div>
             <div id="buttons-div">
-                <Button className="button" active={searchType === 'user' ? true : false} variant="secondary" onClick={fetchUserTweets}>User</Button>
-                <Button className="button" active={searchType === 'content' ? true : false} variant="secondary" onClick={fetchContentTweets}>Content</Button>
+                <Button className="button" disabled={isDisabled} active={searchType === 'user' ? true : false} variant="secondary" onClick={fetchUserTweets}>User</Button>
+                <Button className="button" disabled={isDisabled} active={searchType === 'content' ? true : false} variant="secondary" onClick={fetchContentTweets}>Content</Button>
             </div>
             {fetchFailed ?
                 <Errors searchType={searchType} />
