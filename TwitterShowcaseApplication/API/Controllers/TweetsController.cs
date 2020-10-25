@@ -11,18 +11,24 @@ namespace API.Controllers
     public class TweetsController : ControllerBase
     {
 
-        private readonly ITwitterService _twitterModel;
+        private readonly ITwitterSearchService _twitterSearchService;
+        private readonly ITwitterTimelineService _twitterTimelineService;
+        private readonly ITwitterUserQueryService _twitterUserQueryService;
 
-        public TweetsController(ITwitterService twittermodel)
+        public TweetsController(ITwitterSearchService twitterSearchService,
+            ITwitterTimelineService twitterTimelineService,
+            ITwitterUserQueryService twitterUserQueryService)
         {
-            _twitterModel = twittermodel;
+            _twitterSearchService = twitterSearchService;
+            _twitterTimelineService = twitterTimelineService;
+            _twitterUserQueryService = twitterUserQueryService;
         }
 
 
         [HttpGet("timeline")]
         public Task<List<Tweet>> Get(string user)
         {
-            return _twitterModel.GetUserTimeline(user);
+            return _twitterTimelineService.GetUserTimeline(user);
         }
 
         [HttpGet("cursor_timeline")]
@@ -30,13 +36,13 @@ namespace API.Controllers
         {
             long long_lastId = long.Parse(lastId);
             long_lastId = long_lastId - 1;
-            return _twitterModel.GetUserTimeline(user, long_lastId);
+            return _twitterTimelineService.GetUserTimeline(user, long_lastId);
         }
 
         [HttpGet("search")]
         public Task<ContentTweet> GetContent(string content)
         {
-            return _twitterModel.GetContentSearch(content);
+            return _twitterSearchService.GetContentSearch(content);
         }
 
         [HttpGet("cursor_search")]
@@ -44,20 +50,19 @@ namespace API.Controllers
         {
             long long_lastId = long.Parse(lastId);
             long_lastId = long_lastId - 1;
-            return _twitterModel.GetCursorContentSearch(content, long_lastId);
+            return _twitterSearchService.GetContentSearch(content, long_lastId);
         }
-
 
         [HttpGet("users")]
         public Task<User> GetUsers(string user)
         {
-            return _twitterModel.GetUser(user);
+            return _twitterUserQueryService.Get(user);
         }
 
         [HttpGet("users_random")]
         public Task<Tweet> GetUsersRandom(string user)
         {
-            return _twitterModel.GetUsersRandom(user);
+            return _twitterTimelineService.GetRandomTweet(user);
         }
     }
 }

@@ -43,7 +43,9 @@ namespace API
             {
                 config.RootPath = "client/build";
             });
-            services.AddScoped<ITwitterService, TwitterService>();
+            services.AddScoped<ITwitterSearchService, TwitterSearchService>();
+            services.AddScoped<ITwitterTimelineService, TwitterTimelineService>();
+            services.AddScoped<ITwitterUserQueryService, TwitterUserQueryService>();
 
         }
 
