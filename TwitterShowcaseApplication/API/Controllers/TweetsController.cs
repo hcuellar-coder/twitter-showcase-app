@@ -1,5 +1,7 @@
 ﻿using API.Model;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -9,36 +11,36 @@ namespace API.Controllers
     public class TweetsController : ControllerBase
     {
 
-        private readonly ITwitterModel _twitterModel;
+        private readonly ITwitterService _twitterModel;
 
-        public TweetsController(ITwitterModel twittermodel)
+        public TweetsController(ITwitterService twittermodel)
         {
             _twitterModel = twittermodel;
         }
 
 
         [HttpGet("timeline")]
-        public Task<object> Get(string user)
+        public Task<List<Tweet>> Get(string user)
         {
             return _twitterModel.GetUserTimeline(user);
         }
 
         [HttpGet("cursor_timeline")]
-        public Task<object> GetCursorUser(string user, string lastId)
+        public Task<List<Tweet>> GetCursorUser(string user, string lastId)
         {
             long long_lastId = long.Parse(lastId);
             long_lastId = long_lastId - 1;
-            return _twitterModel.GetCursorUserTimeline(user, long_lastId);
+            return _twitterModel.GetUserTimeline(user, long_lastId);
         }
 
         [HttpGet("search")]
-        public Task<object> GetContent(string content)
+        public Task<ContentTweet> GetContent(string content)
         {
             return _twitterModel.GetContentSearch(content);
         }
 
         [HttpGet("cursor_search")]
-        public Task<object> GetCursorContent(string content, string lastId)
+        public Task<ContentTweet> GetCursorContent(string content, string lastId)
         {
             long long_lastId = long.Parse(lastId);
             long_lastId = long_lastId - 1;
@@ -47,13 +49,13 @@ namespace API.Controllers
 
 
         [HttpGet("users")]
-        public Task<object> GetUsers(string user)
+        public Task<User> GetUsers(string user)
         {
             return _twitterModel.GetUser(user);
         }
 
         [HttpGet("users_random")]
-        public Task<object> GetUsersRandom(string user)
+        public Task<Tweet> GetUsersRandom(string user)
         {
             return _twitterModel.GetUsersRandom(user);
         }

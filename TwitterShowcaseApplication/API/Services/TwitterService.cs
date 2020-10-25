@@ -1,79 +1,68 @@
-﻿using Newtonsoft.Json;
+﻿using API.Model;
+using Microsoft.AspNetCore.WebUtilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace API.Model
+namespace API.Services
 {
-    public interface ITwitterModel
+    public interface ITwitterService
     {
-        Task<object> GetUserTimeline(string user);
-        Task<object> GetCursorUserTimeline(string user, long lastId);
-        Task<object> GetContentSearch(string content);
-        Task<object> GetCursorContentSearch(string content, long lastId);
-        Task<object> GetUser(string user);
-        Task<object> GetUsersRandom(string user);
+        Task<List<Tweet>> GetUserTimeline(string user, long? lastId = null);
+        Task<ContentTweet> GetContentSearch(string content);
+        Task<ContentTweet> GetCursorContentSearch(string content, long lastId);
+        Task<User> GetUser(string user);
+        Task<Tweet> GetUsersRandom(string user);
     }
-    public class TwitterModel : ITwitterModel
+    public class TwitterService : ITwitterService
     {
         List<Tweet> tweets;
         ContentTweet ContentTweets;
         User userInfo;
-        Tweet randomTweet;
         string errorString;
+        Tweet randomTweet;
         private readonly IHttpClientFactory _clientFactory;
 
-        public TwitterModel(IHttpClientFactory clientFactory)
+        public TwitterService(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
         }
 
-        public async Task<object> GetUserTimeline(string user)
+        public async Task<List<Tweet>> GetUserTimeline(string user, long? lastId = null)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get,
-                "statuses/user_timeline.json?count=10&tweet_mode=extended&screen_name=" + user);
+            var queryStrings = new Dictionary<string, string>()
+            {
+                {"count", lastId == null ? "10" : "5" },
+                {"tweet_mode", "extended" },
+                {"screen_name", user }
+            };
+
+            if (lastId != null)
+            {
+                queryStrings.Add("max_id", lastId.Value.ToString());
+            }
+
+            var requestUri = QueryHelpers.AddQueryString("statuses/user_timeline.json", queryStrings);
+
+            var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
             var client = _clientFactory.CreateClient("twitter");
 
             var response = await client.SendAsync(request);
 
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode == false)
             {
-                var responseStream = await response.Content.ReadAsStringAsync();
-                tweets = JsonConvert.DeserializeObject<List<Tweet>>(responseStream);
-                errorString = null;
-                return tweets;
-            }
-            else
-            {
-                errorString = $"There was an error getting our tweets: {response.ReasonPhrase}";
+                var errorString = $"There was an error getting our tweets: {response.ReasonPhrase}";
                 throw new Exception(errorString);
             }
+
+            var responseStream = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<Tweet>>(responseStream);
         }
 
-        public async Task<object> GetCursorUserTimeline(string user, long lastId)
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get,
-                "statuses/user_timeline.json?max_id=" + lastId + "&count=5&tweet_mode=extended&screen_name=" + user);
-            var client = _clientFactory.CreateClient("twitter");
 
-            var response = await client.SendAsync(request);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseStream = await response.Content.ReadAsStringAsync();
-                tweets = JsonConvert.DeserializeObject<List<Tweet>>(responseStream);
-                errorString = null;
-                return tweets;
-            }
-            else
-            {
-                errorString = $"There was an error getting our tweets: {response.ReasonPhrase}";
-                throw new Exception(errorString);
-            }
-        }
-
-        public async Task<object> GetContentSearch(string content)
+        public async Task<ContentTweet> GetContentSearch(string content)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
                 "search/tweets.json?count=10&tweet_mode=extended&q=" + content + "&result_type=recent");
@@ -95,7 +84,7 @@ namespace API.Model
             }
         }
 
-        public async Task<object> GetCursorContentSearch(string content, long lastId)
+        public async Task<ContentTweet> GetCursorContentSearch(string content, long lastId)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
                 "search/tweets.json?max_id=" + lastId + "&count=5&tweet_mode=extended&q=" + content + "&result_type=recent");
@@ -117,7 +106,7 @@ namespace API.Model
             }
         }
 
-        public async Task<object> GetUser(string user)
+        public async Task<User> GetUser(string user)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
                 "users/show.json?screen_name=" + user);
@@ -138,7 +127,7 @@ namespace API.Model
             }
         }
 
-        public async Task<object> GetUsersRandom(string user)
+        public async Task<Tweet> GetUsersRandom(string user)
         {
             var rand = new Random();
             int num = rand.Next(0, 25);

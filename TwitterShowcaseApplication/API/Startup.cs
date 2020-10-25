@@ -1,5 +1,5 @@
 using System;
-using API.Model;
+using API.Services;
 using System.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,7 +43,7 @@ namespace API
             {
                 config.RootPath = "client/build";
             });
-            services.AddScoped<ITwitterModel, TwitterModel>();
+            services.AddScoped<ITwitterService, TwitterService>();
 
         }
 
